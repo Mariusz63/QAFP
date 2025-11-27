@@ -4,6 +4,71 @@
 }
 
 <style>
+    /* Styl dla nagłówka sekcji V */
+    .section-header {
+        background-color: #6c757d; /* Szary jak na obrazie */
+        color: white;
+        padding: 8px 10px;
+        margin-top: 20px;
+        font-size: 1.25rem;
+        font-weight: bold;
+    }
+
+    /* Style dla sekcji V: Obiekty i Działki Rolne (wersja tabelaryczna) */
+    .obiekty-dzialki-table {
+        display: grid;
+        /* Trzy kolumny: 1 dla nagłówka Obiekty/Działki, 2 dla treści */
+        grid-template-columns: 25% 37.5% 37.5%;
+        border: 2px solid #000;
+        border-collapse: collapse;
+    }
+
+    .od-row {
+        display: contents; /* Kluczowe: komórki wiersza nadal są umieszczane w siatce */
+    }
+
+    .od-header, .od-cell {
+        border: 1px solid #000;
+        padding: 8px 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+
+    /* Nagłówki Obiekty i Działki - wyrównanie do góry i bardziej widoczne */
+    .od-header {
+        font-weight: bold;
+        align-items: center; /* Centrowanie dla nagłówków Obiekty/Działki */
+        justify-content: center;
+        flex-direction: column; /* Umożliwia ułożenie tekstu i checkboxa w kolumnie */
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+
+    /* Rozciągnięcie nagłówka 'Obiekty' na dwa wiersze */
+    .od-rowspan-2 {
+        grid-row: span 2;
+    }
+
+    .od-label {
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        line-height: 1.2;
+        text-align: center;
+    }
+
+    .od-checkbox {
+        transform: scale(1.2);
+        accent-color: #777; /* szary jak na zdjęciu */
+    }
+
+    /* Dopasowanie nagłówka sekcji V (jeśli jest taka potrzeba) */
+    .container-custom .section-header:nth-of-type(5) {
+        font-size: 1.25rem;
+    }
     .rodzaj-dzialalnosci-table {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
@@ -492,63 +557,62 @@
 
     <h4 class="section-header">V. OBIEKT I DZIAŁKI ROLNE BĘDĄCE W UŻYTKOWANIU ZGŁASZANEGO PODMIOTU*</h4>
 
-    <div class="section-v-flat mb-3">
-        <div class="form-check-custom">
-            <input asp-for="Obiekty" class="form-check-input-custom" type="checkbox" />
-            <label class="form-check-label fw-bold">Obiekty</label>
-        </div>
-
-        <div class="indented-checkbox">
-            <div class="form-check-custom">
-                <input asp-for="Produkcyjne" class="form-check-input-custom" type="checkbox" />
-                <label class="form-check-label">produkcyjne</label>
+    <div class="obiekty-dzialki-table mb-3">
+        <div class="od-row">
+            <div class="od-header od-rowspan-2">
+                Obiekty <input asp-for="Obiekty" type="checkbox" class="od-checkbox" />
             </div>
-            <div class="form-check-custom">
-                <input asp-for="Magazynowe" class="form-check-input-custom" type="checkbox" />
-                <label class="form-check-label">magazynowe</label>
+            <div class="od-cell">
+                <label class="od-label">
+                    produkcyjne
+                    <input asp-for="Produkcyjne" type="checkbox" class="od-checkbox" />
+                </label>
             </div>
-            <div class="form-check-custom">
-                <input asp-for="Oczyszczalnie" class="form-check-input-custom" type="checkbox" />
-                <label class="form-check-label">oczyszczalnie ścieków</label>
-            </div>
-            <div class="form-check-custom">
-                <input asp-for="Odpady" class="form-check-input-custom" type="checkbox" />
-                <label class="form-check-label">magazynowanie/utylizacja odpadów</label>
+            <div class="od-cell">
+                <label class="od-label">
+                    magazynowe
+                    <input asp-for="Magazynowe" type="checkbox" class="od-checkbox" />
+                </label>
             </div>
         </div>
-
-        <div class="form-check-custom mt-2">
-            <input asp-for="Dzialki" class="form-check-input-custom" type="checkbox" />
-            <label class="form-check-label fw-bold">Działki</label>
-        </div>
-
-        <div class="indented-checkbox mt-2" style="line-height: 1.8;">
-            <p class="mb-0">całkowita pow.(produkcyjne +magazynowe)</p>
-            <div class="text-center" style="margin-bottom: 10px;">
-                <span style="font-size: 1.5rem; display: block;">...</span>
+        <div class="od-row">
+            <div class="od-cell">
+                <label class="od-label">
+                    oczyszczalnie ścieków
+                    <input asp-for="Oczyszczalnie" type="checkbox" class="od-checkbox" />
+                </label>
             </div>
-
-            <p class="mb-0">pow. UR</p>
-            <div class="text-center">
-                <span style="font-size: 1.5rem; display: block;">...</span>
+            <div class="od-cell">
+                <label class="od-label">
+                    magazynowanie/utylizacja odpadów
+                    <input asp-for="Odpady" type="checkbox" class="od-checkbox" />
+                </label>
             </div>
-
-            <input asp-for="CalkowitaPow" type="hidden" />
-            <input asp-for="PowierzchniaUR" type="hidden" />
         </div>
-    </div>
-
-    <h4 class="section-header">VI. RODZAJ I WIELKOŚĆ PRODUKCJI</h4>
-    <div class="form-row mb-3">
-        <div class="col-50">
-            <label class="form-label-custom">Rodzaj**</label>
-            <textarea asp-for="RodzajProdukcjiOpis" class="form-control-custom" rows="2"></textarea>
-            <span asp-validation-for="RodzajProdukcjiOpis" class="text-danger"></span>
-        </div>
-        <div class="col-50">
-            <label class="form-label-custom">Wielkość (w skali roku)</label>
-            <textarea asp-for="WielkoscProdukcji" class="form-control-custom" rows="2"></textarea>
-            <span asp-validation-for="WielkoscProdukcji" class="text-danger"></span>
+        <div class="od-row">
+            <div class="od-header">
+                Działki <input asp-for="Dzialki" type="checkbox" class="od-checkbox" />
+            </div>
+            <div class="od-cell">
+                <label class="od-label" style="display: block; text-align: center;">
+                    całkowita pow.(produkcyjne +magazynowe)
+                    <input asp-for="CalkowitaPow" 
+                           class="form-control-custom" 
+                           style="width: 80%; margin: 5px auto 0; text-align: center; padding: 2px 5px; height: auto;" 
+                           placeholder="..." />
+                    <span asp-validation-for="CalkowitaPow" class="text-danger small"></span>
+                </label>
+            </div>
+            <div class="od-cell">
+                <div class="od-label" style="display: block; text-align: center;">
+                    pow. UR
+                    <input asp-for="PowierzchniaUR" 
+                           class="form-control-custom" 
+                           style="width: 80%; margin: 5px auto 0; text-align: center; padding: 2px 5px; height: auto;" 
+                           placeholder="..." />
+                    <span asp-validation-for="PowierzchniaUR" class="text-danger small"></span>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -587,7 +651,7 @@
 
     <h4 class="section-header">X. OPIS PROCESU PRODUKCJI / GOSPODARSTWA </h4>
     <div class="mb-3">
-        <textarea asp-for="OpisProcesu" class="form-control-custom" rows="3"></textarea>
+        <textarea asp-for="OpisProcesu" class="form-control-custom" rows="5"></textarea>
         <span asp-validation-for="OpisProcesu" class="text-danger"></span>
     </div>
 
