@@ -4,18 +4,126 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
 <h2>Dziękujemy — zgłoszenie zapisane</h2>
 <p>Numer zgłoszenia: @Model.Id</p>
-<dl>
-    <dt>Nazwa</dt>
-    <dd>@Model.Nazwisko @Model.Imie</dd>
-    <dt>Kontakt</dt>
-    <dd>@Model.Telefon</dd>
-    <dd>@Model.Email</dd>
-    <dt>Jednostka certyfikująca</dt>
-    <dd>@Model.JednostkaCertyfikujaca</dd>
-</dl>
 
+<form asp-action="DownloadXml" method="post">
+    @Html.AntiForgeryToken()
+    @foreach (var prop in ViewData.ModelMetadata.Properties)
+    {
+        if (prop.PropertyName != null)
+        {
+            <input type="hidden" name="@prop.PropertyName"
+                   value="@Model?.GetType().GetProperty(prop.PropertyName)?.GetValue(Model)" />
+        }
+    }
+    <button type="submit" class="btn btn-warning mb-3">Pobierz XML</button>
+</form>
 
-<a href="/Form/Index">Wróć do formularza</a>
+<table class="table table-bordered table-striped">
+    <thead class="table-secondary">
+        <tr>
+            <th colspan="2">I. Dane przedsiębiorstwa</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr><td>Nazwisko / Nazwa</td><td>@Model.Nazwisko</td></tr>
+        <tr><td>Imię</td><td>@Model.Imie</td></tr>
+        <tr><td>Telefon</td><td>@Model.Telefon</td></tr>
+        <tr><td>Email</td><td>@Model.Email</td></tr>
+        <tr><td>PESEL</td><td>@Model.Pesel</td></tr>
+        <tr><td>REGON</td><td>@Model.Regon</td></tr>
+        <tr><td>NIP</td><td>@Model.Nip</td></tr>
+    </tbody>
+
+    <thead class="table-secondary">
+        <tr><th colspan="2">II. Adres</th></tr>
+    </thead>
+    <tbody>
+        <tr><td>Siedziba</td><td>@Model.Siedziba</td></tr>
+        <tr><td>Zakład</td><td>@Model.Zaklad</td></tr>
+        <tr><td>Adres do korespondencji</td><td>@Model.Korespondencja</td></tr>
+    </tbody>
+
+    <thead class="table-secondary">
+        <tr><th colspan="2">III. Rodzaj działalności</th></tr>
+    </thead>
+    <tbody>
+        <tr><td>Produkcja zwierzęca</td><td>@(Model.ProdukcjaZwierzeca ? "Tak" : "Nie")</td></tr>
+        <tr><td>Ubój</td><td>@(Model.Uboj ? "Tak" : "Nie")</td></tr>
+        <tr><td>Rozbiór</td><td>@(Model.Rozbior ? "Tak" : "Nie")</td></tr>
+        <tr><td>Przetwórstwo</td><td>@(Model.Przetworstwo ? "Tak" : "Nie")</td></tr>
+        <tr><td>Produkcja konserw</td><td>@(Model.ProdukcjaKonserw ? "Tak" : "Nie")</td></tr>
+        <tr><td>Dystrybucja</td><td>@(Model.Dystrybucja ? "Tak" : "Nie")</td></tr>
+    </tbody>
+
+    <thead class="table-secondary">
+        <tr><th colspan="2">IV. Zakres produkcji</th></tr>
+    </thead>
+    <tbody>
+        <tr><td>Zakres produkcji</td><td>@Model.ZakresProdukcji</td></tr>
+        <tr><td>Procent produkcji</td><td>@Model.ProcentProdukcji</td></tr>
+    </tbody>
+
+    <thead class="table-secondary">
+        <tr><th colspan="2">V. Obiekty i działki rolne</th></tr>
+    </thead>
+    <tbody>
+        <tr><td>Obiekty produkcyjne</td><td>@(Model.Produkcyjne ? "Tak" : "Nie")</td></tr>
+        <tr><td>Obiekty magazynowe</td><td>@(Model.Magazynowe ? "Tak" : "Nie")</td></tr>
+        <tr><td>Oczyszczalnie ścieków</td><td>@(Model.Oczyszczalnie ? "Tak" : "Nie")</td></tr>
+        <tr><td>Magazynowanie/utylizacja odpadów</td><td>@(Model.Odpady ? "Tak" : "Nie")</td></tr>
+        <tr><td>Działki</td><td>@(Model.Dzialki ? "Tak" : "Nie")</td></tr>
+        <tr><td>Całkowita pow.</td><td>@Model.CalkowitaPow</td></tr>
+        <tr><td>Powierzchnia UR</td><td>@Model.PowierzchniaUR</td></tr>
+    </tbody>
+
+    <thead class="table-secondary">
+        <tr><th colspan="2">VI. Rodzaj i wielkość produkcji</th></tr>
+    </thead>
+    <tbody>
+        <tr><td>Rodzaj produkcji</td><td>@Model.RodzajProdukcjiOpis</td></tr>
+        <tr><td>Wielkość produkcji</td><td>@Model.WielkoscProdukcji</td></tr>
+    </tbody>
+
+    <thead class="table-secondary">
+        <tr><th colspan="2">VIII. Podzlecanie działań</th></tr>
+    </thead>
+    <tbody>
+        <tr><td>Podzlecanie</td><td>@(Model.Podzlecanie.HasValue ? (Model.Podzlecanie.Value ? "Tak" : "Nie") : "-")</td></tr>
+        <tr><td>Rodzaj podzlecanych działań</td><td>@Model.RodzajPodzlecanych</td></tr>
+    </tbody>
+
+    <thead class="table-secondary">
+        <tr><th colspan="2">IX. Transport</th></tr>
+    </thead>
+    <tbody>
+        <tr><td>Transport</td><td>@Model.Transport</td></tr>
+    </tbody>
+
+    <thead class="table-secondary">
+        <tr><th colspan="2">X. Opis procesu produkcji/gospodarstwa</th></tr>
+    </thead>
+    <tbody>
+        <tr><td colspan="2">@Model.OpisProcesu</td></tr>
+    </tbody>
+
+    <thead class="table-secondary">
+        <tr><th colspan="2">XI. Jednostka certyfikująca</th></tr>
+    </thead>
+    <tbody>
+        <tr><td colspan="2">@Model.JednostkaCertyfikujaca</td></tr>
+    </tbody>
+
+    <thead class="table-secondary">
+        <tr><th colspan="2">Załączniki</th></tr>
+    </thead>
+    <tbody>
+        <tr><td>Dokumenty potwierdzające status</td><td>@(Model.Zal_DokumentyStatus ? "Tak" : "Nie")</td></tr>
+        <tr><td>Plany sytuacyjne</td><td>@(Model.Zal_PlanySytuacyjne ? "Tak" : "Nie")</td></tr>
+        <tr><td>Plany produkcyjne</td><td>@(Model.Zal_PlanyProdukcyjne ? "Tak" : "Nie")</td></tr>
+        <tr><td>Skład produktu / szacowana wielkość</td><td>@(Model.Zal_SkladProduktu ? "Tak" : "Nie")</td></tr>
+    </tbody>
+</table>
+
+<a href="/Form/Index" class="btn btn-primary mt-3">Wróć do formularza</a>

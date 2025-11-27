@@ -60,7 +60,6 @@ namespace QAFPForm.Models
 
         // ==========================================
         // III. RODZAJ DZIAŁALNOŚCI (Checkbox'y)
-        // Walidacja checkboxów jest bardziej złożona, pomijamy Required, zakładając, że wystarczy 0
         // ==========================================
         [Display(Name = "Produkcja zwierzęca")]
         public bool ProdukcjaZwierzeca { get; set; }
@@ -84,13 +83,13 @@ namespace QAFPForm.Models
         // IV. ZAKRES PRODUKCJI
         // ==========================================
         // Zapewniamy, że wybrano opcję "Całość" lub "Część"
-        [Required(ErrorMessage = "Musisz wybrać zakres produkcji (Całość lub Część).")]
+        //[Required(ErrorMessage = "Musisz wybrać zakres produkcji (Całość lub Część).")]
         public string? ZakresProdukcji { get; set; }
 
         [Display(Name = "Część stanowiąca")]
         [Range(0, 100, ErrorMessage = "Wartość musi mieścić się w zakresie od 0 do 100.")]
-        [RegularExpression(@"^\d{1,3}$", ErrorMessage = "Procent musi być liczbą całkowitą.")]
-        public int? ProcentProdukcji { get; set; }
+        //[RegularExpression(@"^\d{1,3}$", ErrorMessage = "Procent musi być liczbą całkowitą.")]
+        public string? ProcentProdukcji { get; set; }
 
         // ==========================================
         // V. OBIEKT I DZIAŁKI ROLNE
@@ -114,26 +113,25 @@ namespace QAFPForm.Models
         [Display(Name = "Działki")]
         public bool Dzialki { get; set; }
 
-        [Display(Name = "Całkowita pow.")]
-        public string? CalkowitaPow { get; set; }
+        [Display(Name = "Całkowita pow.")] 
+        public double CalkowitaPow { get; set; } = 0;
 
-        [Display(Name = "Powierzchnia UR")]
-        public string? PowierzchniaUR { get; set; }
-
+        [Display(Name = "Powierzchnia UR")] 
+        public double PowierzchniaUR { get; set; } = 0;
 
         // ==========================================
         // VI. RODZAJ I WIELKOŚĆ PRODUKCJI
         // ==========================================
         [Required(ErrorMessage = "Opis rodzaju produkcji jest wymagany.")]
         [Display(Name = "Rodzaj produkcji")]
-        public string? RodzajProdukcjiOpis { get; set; }
+        public string RodzajProdukcjiOpis { get; set; }
 
         [Required(ErrorMessage = "Określenie wielkości produkcji jest wymagane.")]
         [Display(Name = "Wielkość (rocznie)")]
-        public string? WielkoscProdukcji { get; set; }
+        public string WielkoscProdukcji { get; set; }
 
         // ==========================================
-        // VIII. PODZLECANIE (Radio Tak/Nie)
+        // VII. PODZLECANIE (Radio Tak/Nie)
         // ==========================================
         [Required(ErrorMessage = "Musisz określić, czy podzlecasz działania.")]
         public bool? Podzlecanie { get; set; }
@@ -142,20 +140,20 @@ namespace QAFPForm.Models
         public string? RodzajPodzlecanych { get; set; }
 
         // ==========================================
-        // IX. TRANSPORT
+        // VIII. TRANSPORT
         // ==========================================
         [Required(ErrorMessage = "Musisz określić rodzaj transportu.")]
         public string? Transport { get; set; }
 
         // ==========================================
-        // X. OPIS PROCESU
+        // IX. OPIS PROCESU
         // ==========================================
         [Required(ErrorMessage = "Opis procesu produkcji/gospodarstwa jest wymagany.")]
         [Display(Name = "Opis procesu produkcji / gospodarstwa")]
         public string? OpisProcesu { get; set; }
 
         // ==========================================
-        // XI. JEDNOSTKA CERTYFIKUJĄCA
+        // X. JEDNOSTKA CERTYFIKUJĄCA
         // ==========================================
         [Required(ErrorMessage = "Musisz wybrać jednostkę certyfikującą.")]
         [Display(Name = "Wybór jednostki certyfikującej")]
@@ -164,7 +162,6 @@ namespace QAFPForm.Models
         // ==========================================
         // ZAŁĄCZNIKI (Checkbox'y)
         // ==========================================
-        // ... (brak dodatkowej walidacji boolowskiej) ...
         [Display(Name = "Dokumenty potwierdzające status")]
         public bool Zal_DokumentyStatus { get; set; }
 

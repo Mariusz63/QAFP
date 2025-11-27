@@ -21,6 +21,7 @@ namespace QAFPForm.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Submit(FormSubmission model)
         {
+
             // ---- Walidacja: PESEL lub REGON ----
             if (string.IsNullOrWhiteSpace(model.Pesel) && string.IsNullOrWhiteSpace(model.Regon))
             {
@@ -57,7 +58,7 @@ namespace QAFPForm.Controllers
             if (model == null) return NotFound();
             return View(model);
         }
-
+        
         private void SaveToXml(FormSubmission model)
         {
             // katalog "Data" w katalogu głównym projektu (bez wwwroot)
