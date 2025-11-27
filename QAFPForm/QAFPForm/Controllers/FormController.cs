@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using QAFPForm.Models;
-using System.Xml.Linq; 
 using System.IO;
+using System.Text;
+using System.Xml.Linq;
 
 namespace QAFPForm.Controllers
 {
-    public class FormController: Controller
+    public class FormController : Controller
     {
         // Zapis w pamięci (pozniej zamienic na dostęp do bazy danych)
         private static readonly List<FormSubmission> _store = new();
@@ -121,6 +122,57 @@ namespace QAFPForm.Controllers
             doc.Root!.Add(submissionElement);
             doc.Save(filePath);
         }
+
+        public IActionResult DownloadXml(FormSubmission model)
+        {
+            XDocument doc = new XDocument(new XElement("Submissions",
+                new XElement("Submission",
+                    new XElement("Id", model.Id),
+                    new XElement("Nazwisko", model.Nazwisko),
+                    new XElement("Imie", model.Imie),
+                    new XElement("Telefon", model.Telefon),
+                    new XElement("Email", model.Email),
+                    new XElement("Pesel", model.Pesel),
+                    new XElement("Regon", model.Regon),
+                    new XElement("Nip", model.Nip),
+                    new XElement("Siedziba", model.Siedziba),
+                    new XElement("Zaklad", model.Zaklad),
+                    new XElement("Korespondencja", model.Korespondencja),
+                    new XElement("ProdukcjaZwierzeca", model.ProdukcjaZwierzeca),
+                    new XElement("Uboj", model.Uboj),
+                    new XElement("Rozbior", model.Rozbior),
+                    new XElement("Przetworstwo", model.Przetworstwo),
+                    new XElement("ProdukcjaKonserw", model.ProdukcjaKonserw),
+                    new XElement("Dystrybucja", model.Dystrybucja),
+                    new XElement("ZakresProdukcji", model.ZakresProdukcji),
+                    new XElement("ProcentProdukcji", model.ProcentProdukcji),
+                    new XElement("Obiekty", model.Obiekty),
+                    new XElement("Produkcyjne", model.Produkcyjne),
+                    new XElement("Magazynowe", model.Magazynowe),
+                    new XElement("Oczyszczalnie", model.Oczyszczalnie),
+                    new XElement("Odpady", model.Odpady),
+                    new XElement("Dzialki", model.Dzialki),
+                    new XElement("CalkowitaPow", model.CalkowitaPow),
+                    new XElement("PowierzchniaUR", model.PowierzchniaUR),
+                    new XElement("Podzlecanie", model.Podzlecanie),
+                    new XElement("RodzajPodzlecanych", model.RodzajPodzlecanych),
+                    new XElement("Transport", model.Transport),
+                    new XElement("OpisProcesu", model.OpisProcesu),
+                    new XElement("JednostkaCertyfikujaca", model.JednostkaCertyfikujaca),
+                    new XElement("Zal_DokumentyStatus", model.Zal_DokumentyStatus),
+                    new XElement("Zal_PlanySytuacyjne", model.Zal_PlanySytuacyjne),
+                    new XElement("Zal_PlanyProdukcyjne", model.Zal_PlanyProdukcyjne),
+                    new XElement("Zal_SkladProduktu", model.Zal_SkladProduktu)
+                )
+            ));
+
+            // Konwertujemy dokument XML do bajtów
+            byte[] xmlBytes = Encoding.UTF8.GetBytes(doc.ToString());
+
+            // Zwracamy plik do pobrania
+            return File(xmlBytes, "application/xml", "submissions.xml");
+        }
+
 
 
         // Lista dla Admina

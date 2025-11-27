@@ -3,18 +3,18 @@
     ViewData["Title"] = "Zgłoszenie uczestnictwa QAFP";
 }
 
-<link rel="stylesheet" href="~/css/qafp-form.css" /> 
+<link rel="stylesheet" href="~/css/qafp-form.css" />
 
 <div class="container-custom mt-4">
 
     <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px;">
         <div style="text-align: left;">
-            <h1 style="font-size: 1.8rem; margin: 0; font-weight: bold; line-height: 1.2;">
+            <h1 class="print-title" style="margin: 0; font-weight: bold;">
                 ZGŁOSZENIE UCZESTNICTWA<br />W SYSTEMIE JAKOŚCI ŻYWNOŚCI QAFP
             </h1>
-            <p style="font-weight: bold; margin-top: 5px;">NR………/…….</p>
+            <p style="font-weight: bold; margin-top: 10px;">NR………/…….</p>
         </div>
-        <img src="~/images/logoQAFP.png" alt="Logo QAFP" style="max-height: 100px; width: auto;" />
+        <img src="~/images/logoQAFP.png" alt="Logo QAFP" style="max-height: 140px; width: auto;" />
     </div>
 
     <div class="confirm-box mb-3">
@@ -28,304 +28,325 @@
 </div>
 
 <form asp-action="Submit" method="post" class="container-custom">
-    @Html.AntiForgeryToken()
+@Html.AntiForgeryToken()
 
-    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+<div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
-    <h4 class="section-header">I. DANE PRZEDSIĘBIORSTWA LUB GOSPODARSTWA ROLNEGO </h4>
+<h4 class="section-header">I. DANE PRZEDSIĘBIORSTWA LUB GOSPODARSTWA ROLNEGO </h4>
 
-    <div class="form-row mb-3">
-        <div class="col-50">
-            <label asp-for="Nazwisko" class="form-label-custom">Nazwisko / Nazwa:</label>
-            <input asp-for="Nazwisko" class="form-control-custom" />
-            <span asp-validation-for="Nazwisko" class="text-danger"></span>
-        </div>
-        <div class="col-50">
-            <label asp-for="Imie" class="form-label-custom">Imię:</label>
-            <input asp-for="Imie" class="form-control-custom" />
-            <span asp-validation-for="Imie" class="text-danger"></span>
-        </div>
+<div class="form-row mb-3">
+    <div class="col-50">
+        <label asp-for="Nazwisko" class="form-label-custom">Nazwisko / Nazwa:</label>
+        <input asp-for="Nazwisko" class="form-control-custom" />
+        <span asp-validation-for="Nazwisko" class="text-danger"></span>
+    </div>
+    <div class="col-50">
+        <label asp-for="Imie" class="form-label-custom">Imię:</label>
+        <input asp-for="Imie" class="form-control-custom" />
+        <span asp-validation-for="Imie" class="text-danger"></span>
+    </div>
+</div>
+
+<div class="form-row mb-3">
+    <div class="col-50">
+        <label asp-for="Telefon" class="form-label-custom">Numer telefonu:</label>
+        <input asp-for="Telefon" class="form-control-custom" />
+        <span asp-validation-for="Telefon" class="text-danger"></span>
+    </div>
+    <div class="col-50">
+        <label asp-for="Email" class="form-label-custom">Adres e-mail:</label>
+        <input asp-for="Email" class="form-control-custom" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+</div>
+
+<div class="form-row mb-3">
+    <div class="col-50">
+        <label asp-for="Pesel" class="form-label-custom">PESEL:</label>
+        <input asp-for="Pesel" class="form-control-custom" />
+        <span asp-validation-for="Pesel" class="text-danger"></span>
+    </div>
+    <div class="col-50">
+        <label asp-for="Regon" class="form-label-custom">REGON:</label>
+        <input asp-for="Regon" class="form-control-custom" />
+        <span asp-validation-for="Regon" class="text-danger"></span>
+    </div>
+</div>
+
+<div class="mb-3">
+    <label asp-for="Nip" class="form-label-custom">NIP:</label>
+    <input asp-for="Nip" class="form-control-custom" />
+    <span asp-validation-for="Nip" class="text-danger"></span>
+</div>
+
+<h4 class="section-header">II. ADRES </h4>
+
+<div class="mb-3">
+    <label asp-for="Siedziba" class="form-label-custom">Siedziby:</label>
+    <textarea asp-for="Siedziba" class="form-control-custom"></textarea>
+    <span asp-validation-for="Siedziba" class="text-danger"></span>
+</div>
+
+<div class="mb-3">
+    <label asp-for="Zaklad" class="form-label-custom">Zakładu lub gospodarstwa:</label>
+    <textarea asp-for="Zaklad" class="form-control-custom"></textarea>
+    <span asp-validation-for="Zaklad" class="text-danger"></span>
+</div>
+
+<div class="mb-3">
+    <label asp-for="Korespondencja" class="form-label-custom">Adres do korespondencji:</label>
+    <textarea asp-for="Korespondencja" class="form-control-custom"></textarea>
+    <span asp-validation-for="Korespondencja" class="text-danger"></span>
+</div>
+
+<h4 class="section-header">III. RODZAJ DZIAŁALNOŚCI*</h4>
+
+<div class="rodzaj-dzialalnosci-table">
+
+    <div class="rd-cell">
+        <label class="rd-label">
+            Produkcja zwierzęca
+            <input asp-for="ProdukcjaZwierzeca" type="checkbox" class="rd-checkbox">
+        </label>
     </div>
 
-    <div class="form-row mb-3">
-        <div class="col-50">
-            <label asp-for="Telefon" class="form-label-custom">Numer telefonu:</label>
-            <input asp-for="Telefon" class="form-control-custom" placeholder="+48..." />
-            <span asp-validation-for="Telefon" class="text-danger"></span>
-        </div>
-        <div class="col-50">
-            <label asp-for="Email" class="form-label-custom">Adres e-mail:</label>
-            <input asp-for="Email" class="form-control-custom" placeholder="przyklad@domena.pl" />
-            <span asp-validation-for="Email" class="text-danger"></span>
-        </div>
+    <div class="rd-cell">
+        <label class="rd-label">
+            Ubój
+            <input asp-for="Uboj" type="checkbox" class="rd-checkbox">
+        </label>
     </div>
 
-    <div class="form-row mb-3">
-        <div class="col-50">
-            <label asp-for="Pesel" class="form-label-custom">PESEL:</label>
-            <input asp-for="Pesel" class="form-control-custom" />
-            <span asp-validation-for="Pesel" class="text-danger"></span>
-        </div>
-        <div class="col-50">
-            <label asp-for="Regon" class="form-label-custom">REGON:</label>
-            <input asp-for="Regon" class="form-control-custom" />
-            <span asp-validation-for="Regon" class="text-danger"></span>
-        </div>
-    </div>
-    <div class="mb-3">
-        <label asp-for="Nip" class="form-label-custom">NIP:</label>
-        <input asp-for="Nip" class="form-control-custom" />
-        <span asp-validation-for="Nip" class="text-danger"></span>
+    <div class="rd-cell">
+        <label class="rd-label">
+            Rozbiór
+            <input asp-for="Rozbior" type="checkbox" class="rd-checkbox">
+        </label>
     </div>
 
-    <h4 class="section-header">II. ADRES </h4>
-    <div class="mb-3">
-        <label asp-for="Siedziba" class="form-label-custom">Siedziby:</label>
-        <textarea asp-for="Siedziba" class="form-control-custom" rows="1"></textarea>
-        <span asp-validation-for="Siedziba" class="text-danger"></span>
-    </div>
-    <div class="mb-3">
-        <label asp-for="Zaklad" class="form-label-custom">Zakładu lub gospodarstwa:</label>
-        <textarea asp-for="Zaklad" class="form-control-custom" rows="1"></textarea>
-        <span asp-validation-for="Zaklad" class="text-danger"></span>
-    </div>
-    <div class="mb-3">
-        <label asp-for="Korespondencja" class="form-label-custom">Adres do korespondencji:</label>
-        <textarea asp-for="Korespondencja" class="form-control-custom" rows="1"></textarea>
-        <span asp-validation-for="Korespondencja" class="text-danger"></span>
+    <div class="rd-cell">
+        <label class="rd-label">
+            Przetwórstwo
+            <input asp-for="Przetworstwo" type="checkbox" class="rd-checkbox">
+        </label>
     </div>
 
-    <h4 class="section-header">III. RODZAJ DZIAŁALNOŚCI*</h4>
-
-    <div class="rodzaj-dzialalnosci-table">
-
-        <!-- Wiersz 1 -->
-        <div class="rd-cell">
-            <label class="rd-label">
-                Produkcja zwierzęca
-                <input asp-for="ProdukcjaZwierzeca" type="checkbox" class="rd-checkbox">
-            </label>
-        </div>
-
-        <div class="rd-cell">
-            <label class="rd-label">
-                Ubój
-                <input asp-for="Uboj" type="checkbox" class="rd-checkbox">
-            </label>
-        </div>
-
-        <div class="rd-cell">
-            <label class="rd-label">
-                Rozbiór
-                <input asp-for="Rozbior" type="checkbox" class="rd-checkbox">
-            </label>
-        </div>
-
-        <!-- Wiersz 2 -->
-        <div class="rd-cell">
-            <label class="rd-label">
-                Przetwórstwo
-                <input asp-for="Przetworstwo" type="checkbox" class="rd-checkbox">
-            </label>
-        </div>
-
-        <div class="rd-cell">
-            <label class="rd-label">
-                Produkcja konserw
-                <input asp-for="ProdukcjaKonserw" type="checkbox" class="rd-checkbox">
-            </label>
-        </div>
-
-        <div class="rd-cell">
-            <label class="rd-label">
-                Dystrybucja
-                <input asp-for="Dystrybucja" type="checkbox" class="rd-checkbox">
-            </label>
-        </div>
-
+    <div class="rd-cell">
+        <label class="rd-label">
+            Produkcja konserw
+            <input asp-for="ProdukcjaKonserw" type="checkbox" class="rd-checkbox">
+        </label>
     </div>
 
-
-    <h4 class="section-header">IV. ZAKRES PRODUKCJI ZGŁASZANEJ DO SYSTEMU QAFP </h4>
-    <div class="mb-3 confirm-box p-2">
-        <div class="d-flex-custom gap-4">
-            <div class="form-check-custom" style="padding-left: 1.5em; margin-bottom: 0;">
-                <input asp-for="ZakresProdukcji" value="Calosc" class="form-check-input-custom" type="radio" />
-                <label class="form-check-label">CAŁOŚĆ</label>
-            </div>
-            <div class="d-flex-custom">
-                <div class="form-check-custom" style="padding-left: 1.5em; margin-bottom: 0; margin-right: 10px;">
-                    <input asp-for="ZakresProdukcji" value="Czesc" class="form-check-input-custom" type="radio" />
-                    <label class="form-check-label">CZĘŚĆ STANOWIĄCA</label>
-                </div>
-                <input asp-for="ProcentProdukcji" class="form-control-custom" style="width: 50px; text-align: center; padding: 2px 5px; height: auto;" />
-                <span style="margin-left: 5px;">%</span>
-            </div>
-        </div>
-        <span asp-validation-for="ZakresProdukcji" class="text-danger"></span>
-        <span asp-validation-for="ProcentProdukcji" class="text-danger"></span>
+    <div class="rd-cell">
+        <label class="rd-label">
+            Dystrybucja
+            <input asp-for="Dystrybucja" type="checkbox" class="rd-checkbox">
+        </label>
     </div>
 
-    <h4 class="section-header">V. OBIEKT I DZIAŁKI ROLNE BĘDĄCE W UŻYTKOWANIU ZGŁASZANEGO PODMIOTU*</h4>
+</div>
 
-    <div class="obiekty-dzialki-table mb-3">
-        <div class="od-row">
-            <div class="od-header od-rowspan-2">
-                Obiekty <input asp-for="Obiekty" type="checkbox" class="od-checkbox" />
-            </div>
-            <div class="od-cell">
-                <label class="od-label">
-                    produkcyjne
-                    <input asp-for="Produkcyjne" type="checkbox" class="od-checkbox" />
-                </label>
-            </div>
-            <div class="od-cell">
-                <label class="od-label">
-                    magazynowe
-                    <input asp-for="Magazynowe" type="checkbox" class="od-checkbox" />
-                </label>
-            </div>
-        </div>
-        <div class="od-row">
-            <div class="od-cell">
-                <label class="od-label">
-                    oczyszczalnie ścieków
-                    <input asp-for="Oczyszczalnie" type="checkbox" class="od-checkbox" />
-                </label>
-            </div>
-            <div class="od-cell">
-                <label class="od-label">
-                    magazynowanie/utylizacja odpadów
-                    <input asp-for="Odpady" type="checkbox" class="od-checkbox" />
-                </label>
-            </div>
-        </div>
-        <div class="od-row">
-            <div class="od-header">
-                Działki <input asp-for="Dzialki" type="checkbox" class="od-checkbox" />
-            </div>
-            <div class="od-cell">
-                <label class="od-label" style="display: block; text-align: center;">
-                    całkowita pow.(produkcyjne +magazynowe)
-                    <input asp-for="CalkowitaPow" 
-                           class="form-control-custom" 
-                           style="width: 80%; margin: 5px auto 0; text-align: center; padding: 2px 5px; height: auto;" 
-                           placeholder="..." />
-                    <span asp-validation-for="CalkowitaPow" class="text-danger small"></span>
-                </label>
-            </div>
-            <div class="od-cell">
-                <div class="od-label" style="display: block; text-align: center;">
-                    pow. UR
-                    <input asp-for="PowierzchniaUR" 
-                           class="form-control-custom" 
-                           style="width: 80%; margin: 5px auto 0; text-align: center; padding: 2px 5px; height: auto;" 
-                           placeholder="..." />
-                    <span asp-validation-for="PowierzchniaUR" class="text-danger small"></span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <h4 class="section-header">VIII. PODZLECANIE CAŁOŚCI LUB CZĘŚCI DZIAŁAŃ </h4>
-    <div class="mb-2">
-        <div class="d-flex-custom gap-4">
-            <div class="form-check-custom" style="padding-left: 1.5em;">
-                <input asp-for="Podzlecanie" value="true" class="form-check-input-custom" type="radio" />
-                <label class="form-check-label">Tak</label>
-            </div>
-            <div class="form-check-custom" style="padding-left: 1.5em;">
-                <input asp-for="Podzlecanie" value="false" class="form-check-input-custom" type="radio" />
-                <label class="form-check-label">Nie</label>
-            </div>
-        </div>
-        <span asp-validation-for="Podzlecanie" class="text-danger"></span>
-    </div>
-    <div class="mb-3">
-        <label asp-for="RodzajPodzlecanych" class="form-label-custom">Rodzaj podzlecanych działań:</label>
-        <input asp-for="RodzajPodzlecanych" class="form-control-custom" />
-        <span asp-validation-for="RodzajPodzlecanych" class="text-danger"></span>
-    </div>
-
-    <h5 class="fw-bold mt-2" style="font-size: 1rem;">IX. TRANSPORT </h5>
-    <div class="mb-3 d-flex-custom gap-4">
-        <div class="form-check-custom" style="padding-left: 1.5em;">
-            <input asp-for="Transport" value="Wlasny" class="form-check-input-custom" type="radio" />
-            <label class="form-check-label">Własny</label>
-        </div>
-        <div class="form-check-custom" style="padding-left: 1.5em;">
-            <input asp-for="Transport" value="Zewnetrzny" class="form-check-input-custom" type="radio" />
-            <label class="form-check-label">Zewnętrzny</label>
-        </div>
-    </div>
-    <span asp-validation-for="Transport" class="text-danger"></span>
-
-    <h4 class="section-header">X. OPIS PROCESU PRODUKCJI / GOSPODARSTWA </h4>
-    <div class="mb-3">
-        <textarea asp-for="OpisProcesu" class="form-control-custom" rows="5"></textarea>
-        <span asp-validation-for="OpisProcesu" class="text-danger"></span>
-    </div>
-
-    <h4 class="section-header">XI. JEDNOSTKA CERTYFIKUJĄCA </h4>
-    <div class="mb-3">
-        <select asp-for="JednostkaCertyfikujaca" class="form-select-custom">
-            <option value="">-- Wybierz jednostkę --</option>
-            <option value="AgroEko">Centrum Jakości AgroEko Sp. z o.o.</option>
-            <option value="Kiwa">Kiwa Polska Sp. z o.o.</option>
-            <option value="Cobico">Biuro Certyfikacji COBICO</option>
-            <option value="GwarantowanaJakosc">Krajowe Centrum Badań i Certyfikacji "Gwarantowana Jakość"</option>
-            <option value="Biocert">BIOCERT MAŁOPOLSKA Sp. z o.o.</option>
-            <option value="eCO2">eCO2 Sp. z o.o.</option>
-        </select>
-        <span asp-validation-for="JednostkaCertyfikujaca" class="text-danger"></span>
-    </div>
-
-    <div class="legend-section container-custom">
-        <p style="margin-bottom: 0;">* Zaznacz właściwe</p>
-        <p style="margin-top: 0;">** W przypadku wędlin proszę podać rodzaj wędlin i grupę asortymentową</p>
-    </div>
-
-        <strong class="fw-bold">Do zgłoszenia załączam:</strong>
-        <div class="form-check-custom" style="margin-top: 5px;">
-            <input asp-for="Zal_DokumentyStatus" class="form-check-input-custom" type="checkbox" />
-            <label class="form-check-label">dokumenty potwierdzające status zgłaszającego (np. NIP, REGON, wypis z rejestru gruntów, mapy z zaznaczonymi działkami ewidencyjnymi i rolnymi, rodzaj uprawy w przypadku gospodarstw rolnych),</label>
-        </div>
+<h4 class="section-header">IV. ZAKRES PRODUKCJI ZGŁASZANEJ DO SYSTEMU QAFP </h4>
+<div class="mb-3 confirm-box p-2">
+    <div class="d-flex-custom gap-4">
         <div class="form-check-custom">
-            <input asp-for="Zal_PlanySytuacyjne" class="form-check-input-custom" type="checkbox" />
-            <label class="form-check-label">plany sytuacyjne budynków inwentarskich, produkcyjnych, magazynów i innych budynków pomocniczych znajdujących się na terenie gospodarstwa lub przedsiębiorstwa,</label>
-        </div>
-        <div class="form-check-custom">
-            <input asp-for="Zal_PlanyProdukcyjne" class="form-check-input-custom" type="checkbox" />
-            <label class="form-check-label">plany produkcyjne określające wielkość i rodzaj produkcji (w przypadku gospodarstw rolnych: plany produkcji roślinnej, plany produkcji zwierzęcej),</label>
-        </div>
-        <div class="form-check-custom">
-            <input asp-for="Zal_SkladProduktu" class="form-check-input-custom" type="checkbox" />
-            <label class="form-check-label">skład produktu wraz z określeniem wydajności, a przypadku gospodarstw rolnych szacowną wielkość produkcji zwierzęcej,</label>
+            <input asp-for="ZakresProdukcji" value="Calosc" class="form-check-input-custom" type="radio" />
+            <label class="form-check-label">CAŁOŚĆ</label>
         </div>
 
-    <div class="form-row mt-4 mb-4" style="margin-top: 180px; margin-bottom: 40px;">
-        <div class="col-50 text-center">
-            <p style="border-bottom: 1px dotted black; width: 90%; margin: 0 auto 5px auto; height: 20px;"></p>
-            <strong class="fw-bold">Data i miejsce</strong>
+        <div class="d-flex-custom gap-3">
+            <div class="form-check-custom">
+                <input asp-for="ZakresProdukcji" value="Czesc" class="form-check-input-custom" type="radio" />
+                <label class="form-check-label">CZĘŚĆ STANOWIĄCA</label>
+            </div>
+
+            <input asp-for="ProcentProdukcji" class="form-control-custom percent-input" />
+            <span>%</span>
         </div>
-        <div class="col-50 text-center">
-            <p style="border-bottom: 1px dotted black; width: 90%; margin: 0 auto 5px auto; height: 20px;"></p>
-            <strong class="fw-bold">Podpis osoby upoważnionej do reprezentowania</strong>
-        </div>
+    </div>
+    <span asp-validation-for="ZakresProdukcji" class="text-danger"></span>
+    <span asp-validation-for="ProcentProdukcji" class="text-danger"></span>
+</div>
+
+<h4 class="section-header">V. OBIEKT I DZIAŁKI ROLNE *</h4>
+<div class="obiekty-dzialki-table mb-3">
+    <div class="od-header od-rowspan-2">
+        Obiekty <input asp-for="Obiekty" type="checkbox" class="od-checkbox" />
+    </div>
+    <div class="od-cell">
+        <label class="od-label">
+            produkcyjne
+            <input asp-for="Produkcyjne" type="checkbox" class="od-checkbox" />
+        </label>
+    </div>
+    <div class="od-cell">
+        <label class="od-label">
+            magazynowe
+            <input asp-for="Magazynowe" type="checkbox" class="od-checkbox" />
+        </label>
+    </div>
+    <div class="od-cell">
+        <label class="od-label">
+            oczyszczalnie ścieków
+            <input asp-for="Oczyszczalnie" type="checkbox" class="od-checkbox" />
+        </label>
+    </div>
+    <div class="od-cell">
+        <label class="od-label">
+            magazynowanie/utylizacja odpadów
+            <input asp-for="Odpady" type="checkbox" class="od-checkbox" />
+        </label>
     </div>
 
-    <div class="mt-4 text-center no-print pb-5">
-        <button type="submit" class="btn-custom btn-success-custom" style="margin-right: 15px;">Zapisz w systemie</button>
-        <button type="button" onclick="window.print()" class="btn-custom btn-info-custom">Drukuj / PDF</button>
+    <div class="od-header">
+        Działki <input asp-for="Dzialki" type="checkbox" class="od-checkbox" />
     </div>
+
+    <div class="od-cell text-center">
+        całkowita pow.(produkcyjne + magazynowe)
+        <input asp-for="CalkowitaPow" class="form-control-custom w-80 centered-input" />
+        <span asp-validation-for="CalkowitaPow" class="text-danger small"></span>
+    </div>
+
+    <div class="od-cell text-center">
+        pow. UR
+        <input asp-for="PowierzchniaUR" class="form-control-custom w-80 centered-input" />
+        <span asp-validation-for="PowierzchniaUR" class="text-danger small"></span>
+    </div>
+</div>
+
+<h4 class="section-header">VIII. PODZLECANIE DZIAŁAŃ </h4>
+<div class="mb-2 d-flex-custom gap-4">
+    <div class="form-check-custom">
+        <input asp-for="Podzlecanie" value="true" class="form-check-input-custom" type="radio" />
+        <label class="form-check-label">Tak</label>
+    </div>
+    <div class="form-check-custom">
+        <input asp-for="Podzlecanie" value="false" class="form-check-input-custom" type="radio" />
+        <label class="form-check-label">Nie</label>
+    </div>
+</div>
+<span asp-validation-for="Podzlecanie" class="text-danger"></span>
+
+<div class="mb-3">
+    <label asp-for="RodzajPodzlecanych" class="form-label-custom">Rodzaj podzlecanych działań:</label>
+    <input asp-for="RodzajPodzlecanych" class="form-control-custom" />
+    <span asp-validation-for="RodzajPodzlecanych" class="text-danger"></span>
+</div>
+
+<h5 class="section-header">IX. TRANSPORT</h5>
+<div class="mb-3 d-flex-custom gap-4">
+    <div class="form-check-custom">
+        <input asp-for="Transport" value="Wlasny" class="form-check-input-custom" type="radio" />
+        <label class="form-check-label">Własny</label>
+    </div>
+    <div class="form-check-custom">
+        <input asp-for="Transport" value="Zewnetrzny" class="form-check-input-custom" type="radio" />
+        <label class="form-check-label">Zewnętrzny</label>
+    </div>
+</div>
+<span asp-validation-for="Transport" class="text-danger"></span>
+
+<h4 class="section-header">X. OPIS PROCESU PRODUKCJI / GOSPODARSTWA </h4>
+<div class="mb-3">
+    <textarea asp-for="OpisProcesu" class="form-control-custom" rows="5"></textarea>
+    <span asp-validation-for="OpisProcesu" class="text-danger"></span>
+</div>
+
+<h4 class="section-header">XI. JEDNOSTKA CERTYFIKUJĄCA </h4>
+<div class="mb-3">
+    <select asp-for="JednostkaCertyfikujaca" class="form-select-custom">
+        <option value="">-- Wybierz jednostkę --</option>
+        <option value="AgroEko">Centrum Jakości AgroEko Sp. z o.o.</option>
+        <option value="Kiwa">Kiwa Polska Sp. z o.o.</option>
+        <option value="Cobico">Biuro Certyfikacji COBICO</option>
+        <option value="GwarantowanaJakosc">Krajowe Centrum Badań i Certyfikacji "Gwarantowana Jakość"</option>
+        <option value="Biocert">BIOCERT MAŁOPOLSKA Sp. z o.o.</option>
+        <option value="eCO2">eCO2 Sp. z o.o.</option>
+    </select>
+    <span asp-validation-for="JednostkaCertyfikujaca" class="text-danger"></span>
+</div>
+
+<div class="legend-section container-custom">
+    <p><strong>* Zaznacz właściwe</strong></p>
+    <p><strong>** W przypadku wędlin proszę podać rodzaj wędlin i grupę asortymentową</strong></p>
+</div>
+
+<strong class="fw-bold">Do zgłoszenia załączam:</strong>
+<div class="form-check-custom" style="margin-top: 5px;">
+    <input asp-for="Zal_DokumentyStatus" class="form-check-input-custom" type="checkbox" />
+    <label class="form-check-label">dokumenty potwierdzające status zgłaszającego (np. NIP, REGON, wypis z rejestru gruntów, mapy z zaznaczonymi działkami ewidencyjnymi i rolnymi, rodzaj uprawy w przypadku gospodarstw rolnych),</label>
+</div>
+<div class="form-check-custom">
+    <input asp-for="Zal_PlanySytuacyjne" class="form-check-input-custom" type="checkbox" />
+    <label class="form-check-label">plany sytuacyjne budynków inwentarskich, produkcyjnych, magazynów i innych budynków pomocniczych znajdujących się na terenie gospodarstwa lub przedsiębiorstwa,</label>
+</div>
+<div class="form-check-custom">
+    <input asp-for="Zal_PlanyProdukcyjne" class="form-check-input-custom" type="checkbox" />
+    <label class="form-check-label">plany produkcyjne określające wielkość i rodzaj produkcji (w przypadku gospodarstw rolnych: plany produkcji roślinnej, plany produkcji zwierzęcej),</label>
+</div>
+<div class="form-check-custom">
+    <input asp-for="Zal_SkladProduktu" class="form-check-input-custom" type="checkbox" />
+    <label class="form-check-label">skład produktu wraz z określeniem wydajności, a przypadku gospodarstw rolnych szacowną wielkość produkcji zwierzęcej,</label>
+</div>
+
+<div class="form-row mb-4 signature-row" style="margin-top: 60px;">
+    <div class="col-50 text-center">
+        <p class="signature-line"></p>
+        <strong>Data i miejsce</strong>
+    </div>
+    <div class="col-50 text-center">
+        <p class="signature-line"></p>
+        <strong>Podpis osoby upoważnionej do reprezentowania</strong>
+    </div>
+</div>
+
+    <!-- Główny formularz -->
+    <form asp-action="Save" method="post">
+        <!-- ... pola formularza ... -->
+
+        <div class="mt-4 text-center no-print pb-5">
+            <button type="submit" class="btn-custom btn-success-custom me-2">
+                Zapisz w systemie
+            </button>
+
+            <button type="button" onclick="window.print()" class="btn-custom btn-info-custom">
+                Drukuj / PDF
+            </button>
+        </div>
+    </form>
+
+    <!-- Formularz do pobierania XML -->
+    <form asp-action="DownloadXml" method="post" class="no-print text-center">
+        @Html.AntiForgeryToken()
+
+        @foreach (var prop in ViewData.ModelMetadata.Properties)
+        {
+            if (prop.PropertyName != null)
+            {
+                <input type="hidden" name="@prop.PropertyName"
+                       value="@Model?.GetType().GetProperty(prop.PropertyName)?.GetValue(Model)" />
+            }
+        }
+
+        <button type="submit" class="btn-custom btn-warning-custom">
+            Pobierz XML
+        </button>
+    </form>
+
 </form>
 
-<hr class="mt-5 no-print" style="border: 0; border-top: 1px solid #eee; margin-top: 40px;" />
-<div class="text-center small text-muted mb-4 container-custom">
-    <p>ul. Solec 18 lok. u51, 00-410 Warszawa, Polska</p>
-    <p>Tel/fax: +48 22 696 52 70, </p>
-    <p>www.qafp.pl, qafp@upemi.pl</p>
+@* <hr class="mt-5 no-print separator" /> *@
+<div class="header-flex signature-row">
+    <img src="~/images/upemi.jpg" alt="Logo upemi" class="logo-upemi" />
+    <div class="text-center">
+        <p>ul. Solec 18 lok. u51, 00-410 Warszawa, Polska</p>
+        <p>Tel/fax: +48 22 696 52 70</p>
+        <p>www.qafp.pl, qafp@upemi.pl</p>
+    </div>
 </div>
+
 
 @section Scripts {
     @{

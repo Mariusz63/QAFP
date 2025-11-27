@@ -90,7 +90,7 @@ namespace QAFPForm.Models
         [Display(Name = "Część stanowiąca")]
         [Range(0, 100, ErrorMessage = "Wartość musi mieścić się w zakresie od 0 do 100.")]
         [RegularExpression(@"^\d{1,3}$", ErrorMessage = "Procent musi być liczbą całkowitą.")]
-        public string? ProcentProdukcji { get; set; }
+        public int? ProcentProdukcji { get; set; }
 
         // ==========================================
         // V. OBIEKT I DZIAŁKI ROLNE
