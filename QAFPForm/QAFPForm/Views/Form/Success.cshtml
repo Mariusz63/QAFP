@@ -1,0 +1,21 @@
+﻿@model QAFPForm.Models.FormSubmission
+@{
+    ViewData["Title"] = "Zgłoszenie zapisane";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h2>Dziękujemy — zgłoszenie zapisane</h2>
+<p>Numer zgłoszenia: @Model.Id</p>
+<dl>
+    <dt>Nazwa</dt>
+    <dd>@Model.Nazwisko @Model.Imie</dd>
+    <dt>Kontakt</dt>
+    <dd>@Model.Telefon</dd>
+    <dd>@Model.Email</dd>
+    <dt>Jednostka certyfikująca</dt>
+    <dd>@Model.JednostkaCertyfikujaca</dd>
+</dl>
+
+
+<a href="/Form/Index">Wróć do formularza</a>

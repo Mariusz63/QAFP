@@ -1,0 +1,24 @@
+﻿@model IEnumerable<QAFPForm.Models.FormSubmission>
+@{
+    ViewData["Title"] = "Lista zgłoszeń";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h2>Wszystkie zgłoszenia</h2>
+<table>
+    <thead>
+    <tr><th>ID</th><th>Nazwa</th><th>Kontakt</th></tr>
+    </thead>
+    <tbody>
+    @foreach(var it in Model)
+    {
+        <tr>
+            <td>@it.Id</td>
+            <td>@it.Nazwisko @it.Imie</td>
+            <td>@it.Telefon</td>
+            <td>@it.Email</td>
+        </tr>
+    }
+    </tbody>
+</table>

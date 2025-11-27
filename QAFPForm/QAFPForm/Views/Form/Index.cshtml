@@ -1,0 +1,659 @@
+﻿@model QAFPForm.Models.FormSubmission
+@{
+    ViewData["Title"] = "Zgłoszenie uczestnictwa QAFP";
+}
+
+<style>
+    .rodzaj-dzialalnosci-table {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        border: 2px solid #000;
+        border-collapse: collapse;
+    }
+
+    .rd-cell {
+        border: 1px solid #000;
+        padding: 12px 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 55px; /* wysokość sekcji jak na grafice */
+    }
+
+    .rd-label {
+        font-size: 18px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .rd-checkbox {
+        transform: scale(1.2);
+        accent-color: #777; /* szary jak na zdjęciu */
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container-custom {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 0 15px;
+    }
+
+    /* Spacing - Margins and Paddings */
+    .mt-4 {
+        margin-top: 20px;
+    }
+
+    .mb-3 {
+        margin-bottom: 15px;
+    }
+
+    .mb-2 {
+        margin-bottom: 10px;
+    }
+
+    .pb-5 {
+        padding-bottom: 30px;
+    }
+
+    .p-2 {
+        padding: 8px;
+    }
+
+    /* Nagłówki sekcji */
+    .section-header {
+        background-color: #6c757d; /* Szary */
+        color: white;
+        padding: 8px 10px;
+        margin-top: 20px;
+        font-size: 1.25rem;
+        font-weight: bold;
+    }
+
+    /* Box dla potwierdzenia */
+    .confirm-box {
+        border: 1px solid #dee2e6;
+        margin-bottom: 20px;
+    }
+
+    .confirm-header {
+        padding: 8px 10px;
+        margin: 0;
+        font-size: 1.1rem;
+        font-weight: bold;
+        background-color: #f8f9fa; /* Jasnoszary */
+    }
+
+    .confirm-body {
+        min-height: 40px;
+        padding: 10px;
+    }
+
+    .confirm-footer {
+        color: #6c757d;
+        font-size: 0.75rem;
+        padding: 8px 10px 0;
+        display: block;
+    }
+
+    /* Formularz - Kontrola wyglądu */
+    .form-label-custom {
+        display: block;
+        margin-bottom: 3px;
+        font-weight: bold;
+    }
+
+    .form-control-custom, .form-select-custom {
+        width: 100%;
+        padding: 6px 12px;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        box-sizing: border-box; /* Utrzymuje rozmiar w granicach width: 100% */
+        font-size: 1rem;
+    }
+
+    textarea.form-control-custom {
+        resize: vertical;
+    }
+
+    /* Checkbox/Radio */
+    .form-check-custom {
+        display: block;
+        min-height: 1.5rem;
+        padding-left: 1.5em;
+        margin-bottom: 5px;
+    }
+
+    .form-check-input-custom {
+        float: left;
+        margin-left: -1.5em;
+        margin-top: 0.25em;
+    }
+
+    /* ----------------------------------------------------- */
+    /* UKŁAD KOLUMN (Flexbox) */
+    /* ----------------------------------------------------- */
+
+    .form-row {
+        display: flex;
+        flex-wrap: wrap; /* Umożliwia łamanie wierszy na mniejszych ekranach (lub w druku) */
+        margin-left: -10px;
+        margin-right: -10px;
+    }
+
+    .col-50 {
+        flex: 0 0 50%;
+        max-width: 50%;
+        padding-left: 10px;
+        padding-right: 10px;
+        box-sizing: border-box;
+    }
+
+    .col-33 {
+        flex: 0 0 33.333%;
+        max-width: 33.333%;
+        padding-left: 10px;
+        padding-right: 10px;
+        box-sizing: border-box;
+    }
+
+    /* Display utilities */
+    .d-flex-custom {
+        display: flex;
+        align-items: center;
+    }
+
+    .gap-4 {
+        gap: 20px;
+    }
+
+    .gap-3 {
+        gap: 15px;
+    }
+
+    .text-center {
+        text-align: center;
+    }
+
+    /* Walidacja i Style tekstu */
+    .text-danger {
+        color: #ff4500 !important;
+        font-weight: bold;
+        font-size: 0.85rem;
+        display: block;
+    }
+
+    .fw-bold {
+        font-weight: bold;
+    }
+
+    .small {
+        font-size: 0.85rem;
+    }
+
+    .text-muted {
+        color: #6c757d;
+    }
+
+    .alert-custom {
+        padding: 10px;
+        margin-top: 15px;
+        border: 1px solid #ccc;
+        background-color: #f0f8ff; /* Jasny niebieski dla alertu */
+        font-size: 0.9rem;
+    }
+
+    .fs-5 {
+        font-size: 1.25rem;
+    }
+
+    /* ----------------------------------------------------- */
+    /* USTAWIENIA DRUKOWANIA (A4, 2 Strony, Identyczny wygląd) */
+    /* ----------------------------------------------------- */
+    @@media print {
+
+        @@page {
+            size: A4;
+            margin: 8mm 8mm 8mm 8mm; /* Jeszcze mniejsze marginesy */
+        }
+
+        body {
+            font-size: 9px !important; /* MNIEJSZA czcionka */
+            line-height: 1.05 !important; /* Bardzo zbite odstępy */
+            transform: scale(0.90); /* Silniejsze pomniejszenie */
+            transform-origin: top left;
+            width: 100%;
+        }
+
+        * {
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+        }
+
+        .no-print, header, footer, button {
+            display: none !important;
+        }
+        /* Kolumny zostają, ale bardziej zbite */
+        .form-row {
+            display: flex !important;
+            flex-wrap: nowrap !important;
+            margin-bottom: 3px !important;
+        }
+
+        .col-50, .col-33 {
+            page-break-inside: avoid;
+            padding-left: 5px !important;
+            padding-right: 5px !important;
+        }
+        /* Mniejsze odstępy */
+        .mb-3 {
+            margin-bottom: 4px !important;
+        }
+
+        .mb-2 {
+            margin-bottom: 3px !important;
+        }
+
+        .mt-4 {
+            margin-top: 8px !important;
+        }
+
+        .p-2 {
+            padding: 3px !important;
+        }
+        /* Etkiety */
+        .form-label-custom {
+            font-size: 9px !important;
+            margin-bottom: 1px !important;
+        }
+        /* Pola formularzy */
+        .form-control-custom,
+        .form-select-custom {
+            font-size: 9px !important;
+            padding: 1px 3px !important;
+            min-height: 18px !important;
+        }
+
+        textarea.form-control-custom {
+            line-height: 1.05 !important;
+            padding: 2px 3px !important;
+        }
+        /* Checkboxy i radiobuttony */
+        .form-check-custom {
+            min-height: 1rem !important;
+            margin-bottom: 2px !important;
+        }
+
+        .form-check-input-custom {
+            margin-top: 0 !important;
+        }
+        /* Nagłówki sekcji */
+        .section-header {
+            font-size: 0.9rem !important;
+            padding: 5px 7px !important;
+            margin-top: 10px !important;
+        }
+        /* Box potwierdzenia */
+        .confirm-box {
+            padding: 5px !important;
+            margin-bottom: 10px !important;
+        }
+
+        .confirm-header {
+            font-size: 0.85rem !important;
+            padding: 5px 7px !important;
+        }
+
+        .confirm-body {
+            min-height: 25px !important;
+            padding: 5px !important;
+        }
+
+        .confirm-footer {
+            font-size: 7px !important;
+            padding-top: 3px !important;
+        }
+
+        .alert-custom {
+            font-size: 8px !important;
+            padding: 6px !important;
+            margin-top: 10px !important;
+        }
+    }
+
+</style>
+
+<div class="container-custom mt-4">
+
+    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px;">
+        <div style="text-align: left;">
+            <h1 style="font-size: 1.8rem; margin: 0; font-weight: bold; line-height: 1.2;">
+                ZGŁOSZENIE UCZESTNICTWA<br />W SYSTEMIE JAKOŚCI ŻYWNOŚCI QAFP
+            </h1>
+            <p style="font-weight: bold; margin-top: 5px;">NR………/…….</p>
+        </div>
+        <img src="~/images/logoQAFP.png" alt="Logo QAFP" style="max-height: 100px; width: auto;" />
+    </div>
+
+    <div class="confirm-box mb-3">
+        <h3 class="confirm-header">Potwierdzenie przyjęcie zgłoszenia</h3>
+        <div class="confirm-body"></div>
+        <i class="confirm-footer">
+            Data, pieczątka i podpis przyjmującego zgłoszenie (wypełnia Administrator Systemu)
+        </i>
+    </div>
+    <hr class="no-print" style="border: 0; border-top: 1px solid #eee;" />
+</div>
+
+<form asp-action="Submit" method="post" class="container-custom">
+    @Html.AntiForgeryToken()
+
+    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+    <h4 class="section-header">I. DANE PRZEDSIĘBIORSTWA LUB GOSPODARSTWA ROLNEGO </h4>
+
+    <div class="form-row mb-3">
+        <div class="col-50">
+            <label asp-for="Nazwisko" class="form-label-custom">Nazwisko / Nazwa:</label>
+            <input asp-for="Nazwisko" class="form-control-custom" />
+            <span asp-validation-for="Nazwisko" class="text-danger"></span>
+        </div>
+        <div class="col-50">
+            <label asp-for="Imie" class="form-label-custom">Imię:</label>
+            <input asp-for="Imie" class="form-control-custom" />
+            <span asp-validation-for="Imie" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-row mb-3">
+        <div class="col-50">
+            <label asp-for="Telefon" class="form-label-custom">Numer telefonu:</label>
+            <input asp-for="Telefon" class="form-control-custom" placeholder="+48..." />
+            <span asp-validation-for="Telefon" class="text-danger"></span>
+        </div>
+        <div class="col-50">
+            <label asp-for="Email" class="form-label-custom">Adres e-mail:</label>
+            <input asp-for="Email" class="form-control-custom" placeholder="przyklad@domena.pl" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-row mb-3">
+        <div class="col-50">
+            <label asp-for="Pesel" class="form-label-custom">PESEL:</label>
+            <input asp-for="Pesel" class="form-control-custom" />
+            <span asp-validation-for="Pesel" class="text-danger"></span>
+        </div>
+        <div class="col-50">
+            <label asp-for="Regon" class="form-label-custom">REGON:</label>
+            <input asp-for="Regon" class="form-control-custom" />
+            <span asp-validation-for="Regon" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Nip" class="form-label-custom">NIP:</label>
+        <input asp-for="Nip" class="form-control-custom" />
+        <span asp-validation-for="Nip" class="text-danger"></span>
+    </div>
+
+    <h4 class="section-header">II. ADRES </h4>
+    <div class="mb-3">
+        <label asp-for="Siedziba" class="form-label-custom">Siedziby:</label>
+        <textarea asp-for="Siedziba" class="form-control-custom" rows="1"></textarea>
+        <span asp-validation-for="Siedziba" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Zaklad" class="form-label-custom">Zakładu lub gospodarstwa:</label>
+        <textarea asp-for="Zaklad" class="form-control-custom" rows="1"></textarea>
+        <span asp-validation-for="Zaklad" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Korespondencja" class="form-label-custom">Adres do korespondencji:</label>
+        <textarea asp-for="Korespondencja" class="form-control-custom" rows="1"></textarea>
+        <span asp-validation-for="Korespondencja" class="text-danger"></span>
+    </div>
+
+    <h4 class="section-header">III. RODZAJ DZIAŁALNOŚCI*</h4>
+
+    <div class="rodzaj-dzialalnosci-table">
+
+        <!-- Wiersz 1 -->
+        <div class="rd-cell">
+            <label class="rd-label">
+                Produkcja zwierzęca
+                <input asp-for="ProdukcjaZwierzeca" type="checkbox" class="rd-checkbox">
+            </label>
+        </div>
+
+        <div class="rd-cell">
+            <label class="rd-label">
+                Ubój
+                <input asp-for="Uboj" type="checkbox" class="rd-checkbox">
+            </label>
+        </div>
+
+        <div class="rd-cell">
+            <label class="rd-label">
+                Rozbiór
+                <input asp-for="Rozbior" type="checkbox" class="rd-checkbox">
+            </label>
+        </div>
+
+        <!-- Wiersz 2 -->
+        <div class="rd-cell">
+            <label class="rd-label">
+                Przetwórstwo
+                <input asp-for="Przetworstwo" type="checkbox" class="rd-checkbox">
+            </label>
+        </div>
+
+        <div class="rd-cell">
+            <label class="rd-label">
+                Produkcja konserw
+                <input asp-for="ProdukcjaKonserw" type="checkbox" class="rd-checkbox">
+            </label>
+        </div>
+
+        <div class="rd-cell">
+            <label class="rd-label">
+                Dystrybucja
+                <input asp-for="Dystrybucja" type="checkbox" class="rd-checkbox">
+            </label>
+        </div>
+
+    </div>
+
+
+    <h4 class="section-header">IV. ZAKRES PRODUKCJI ZGŁASZANEJ DO SYSTEMU QAFP </h4>
+    <div class="mb-3 confirm-box p-2">
+        <div class="d-flex-custom gap-4">
+            <div class="form-check-custom" style="padding-left: 1.5em; margin-bottom: 0;">
+                <input asp-for="ZakresProdukcji" value="Calosc" class="form-check-input-custom" type="radio" />
+                <label class="form-check-label">CAŁOŚĆ</label>
+            </div>
+            <div class="d-flex-custom">
+                <div class="form-check-custom" style="padding-left: 1.5em; margin-bottom: 0; margin-right: 10px;">
+                    <input asp-for="ZakresProdukcji" value="Czesc" class="form-check-input-custom" type="radio" />
+                    <label class="form-check-label">CZĘŚĆ STANOWIĄCA</label>
+                </div>
+                <input asp-for="ProcentProdukcji" class="form-control-custom" style="width: 50px; text-align: center; padding: 2px 5px; height: auto;" />
+                <span style="margin-left: 5px;">%</span>
+            </div>
+        </div>
+        <span asp-validation-for="ZakresProdukcji" class="text-danger"></span>
+        <span asp-validation-for="ProcentProdukcji" class="text-danger"></span>
+    </div>
+
+    <h4 class="section-header">V. OBIEKT I DZIAŁKI ROLNE BĘDĄCE W UŻYTKOWANIU ZGŁASZANEGO PODMIOTU*</h4>
+
+    <div class="section-v-flat mb-3">
+        <div class="form-check-custom">
+            <input asp-for="Obiekty" class="form-check-input-custom" type="checkbox" />
+            <label class="form-check-label fw-bold">Obiekty</label>
+        </div>
+
+        <div class="indented-checkbox">
+            <div class="form-check-custom">
+                <input asp-for="Produkcyjne" class="form-check-input-custom" type="checkbox" />
+                <label class="form-check-label">produkcyjne</label>
+            </div>
+            <div class="form-check-custom">
+                <input asp-for="Magazynowe" class="form-check-input-custom" type="checkbox" />
+                <label class="form-check-label">magazynowe</label>
+            </div>
+            <div class="form-check-custom">
+                <input asp-for="Oczyszczalnie" class="form-check-input-custom" type="checkbox" />
+                <label class="form-check-label">oczyszczalnie ścieków</label>
+            </div>
+            <div class="form-check-custom">
+                <input asp-for="Odpady" class="form-check-input-custom" type="checkbox" />
+                <label class="form-check-label">magazynowanie/utylizacja odpadów</label>
+            </div>
+        </div>
+
+        <div class="form-check-custom mt-2">
+            <input asp-for="Dzialki" class="form-check-input-custom" type="checkbox" />
+            <label class="form-check-label fw-bold">Działki</label>
+        </div>
+
+        <div class="indented-checkbox mt-2" style="line-height: 1.8;">
+            <p class="mb-0">całkowita pow.(produkcyjne +magazynowe)</p>
+            <div class="text-center" style="margin-bottom: 10px;">
+                <span style="font-size: 1.5rem; display: block;">...</span>
+            </div>
+
+            <p class="mb-0">pow. UR</p>
+            <div class="text-center">
+                <span style="font-size: 1.5rem; display: block;">...</span>
+            </div>
+
+            <input asp-for="CalkowitaPow" type="hidden" />
+            <input asp-for="PowierzchniaUR" type="hidden" />
+        </div>
+    </div>
+
+    <h4 class="section-header">VI. RODZAJ I WIELKOŚĆ PRODUKCJI</h4>
+    <div class="form-row mb-3">
+        <div class="col-50">
+            <label class="form-label-custom">Rodzaj**</label>
+            <textarea asp-for="RodzajProdukcjiOpis" class="form-control-custom" rows="2"></textarea>
+            <span asp-validation-for="RodzajProdukcjiOpis" class="text-danger"></span>
+        </div>
+        <div class="col-50">
+            <label class="form-label-custom">Wielkość (w skali roku)</label>
+            <textarea asp-for="WielkoscProdukcji" class="form-control-custom" rows="2"></textarea>
+            <span asp-validation-for="WielkoscProdukcji" class="text-danger"></span>
+        </div>
+    </div>
+
+    <h4 class="section-header">VIII. PODZLECANIE CAŁOŚCI LUB CZĘŚCI DZIAŁAŃ </h4>
+    <div class="mb-2">
+        <div class="d-flex-custom gap-4">
+            <div class="form-check-custom" style="padding-left: 1.5em;">
+                <input asp-for="Podzlecanie" value="true" class="form-check-input-custom" type="radio" />
+                <label class="form-check-label">Tak</label>
+            </div>
+            <div class="form-check-custom" style="padding-left: 1.5em;">
+                <input asp-for="Podzlecanie" value="false" class="form-check-input-custom" type="radio" />
+                <label class="form-check-label">Nie</label>
+            </div>
+        </div>
+        <span asp-validation-for="Podzlecanie" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="RodzajPodzlecanych" class="form-label-custom">Rodzaj podzlecanych działań:</label>
+        <input asp-for="RodzajPodzlecanych" class="form-control-custom" />
+        <span asp-validation-for="RodzajPodzlecanych" class="text-danger"></span>
+    </div>
+
+    <h5 class="fw-bold mt-2" style="font-size: 1rem;">IX. TRANSPORT </h5>
+    <div class="mb-3 d-flex-custom gap-4">
+        <div class="form-check-custom" style="padding-left: 1.5em;">
+            <input asp-for="Transport" value="Wlasny" class="form-check-input-custom" type="radio" />
+            <label class="form-check-label">Własny</label>
+        </div>
+        <div class="form-check-custom" style="padding-left: 1.5em;">
+            <input asp-for="Transport" value="Zewnetrzny" class="form-check-input-custom" type="radio" />
+            <label class="form-check-label">Zewnętrzny</label>
+        </div>
+    </div>
+    <span asp-validation-for="Transport" class="text-danger"></span>
+
+    <h4 class="section-header">X. OPIS PROCESU PRODUKCJI / GOSPODARSTWA </h4>
+    <div class="mb-3">
+        <textarea asp-for="OpisProcesu" class="form-control-custom" rows="3"></textarea>
+        <span asp-validation-for="OpisProcesu" class="text-danger"></span>
+    </div>
+
+    <h4 class="section-header">XI. JEDNOSTKA CERTYFIKUJĄCA </h4>
+    <div class="mb-3">
+        <select asp-for="JednostkaCertyfikujaca" class="form-select-custom">
+            <option value="">-- Wybierz jednostkę --</option>
+            <option value="AgroEko">Centrum Jakości AgroEko Sp. z o.o.</option>
+            <option value="Kiwa">Kiwa Polska Sp. z o.o.</option>
+            <option value="Cobico">Biuro Certyfikacji COBICO</option>
+            <option value="GwarantowanaJakosc">Krajowe Centrum Badań i Certyfikacji "Gwarantowana Jakość"</option>
+            <option value="Biocert">BIOCERT MAŁOPOLSKA Sp. z o.o.</option>
+            <option value="eCO2">eCO2 Sp. z o.o.</option>
+        </select>
+        <span asp-validation-for="JednostkaCertyfikujaca" class="text-danger"></span>
+    </div>
+
+    <div class="legend-section container-custom">
+        <p style="margin-bottom: 0;">* Zaznacz właściwe</p>
+        <p style="margin-top: 0;">** W przypadku wędlin proszę podać rodzaj wędlin i grupę asortymentową</p>
+    </div>
+
+        <strong class="fw-bold">Do zgłoszenia załączam:</strong>
+        <div class="form-check-custom" style="margin-top: 5px;">
+            <input asp-for="Zal_DokumentyStatus" class="form-check-input-custom" type="checkbox" />
+            <label class="form-check-label">dokumenty potwierdzające status zgłaszającego (np. NIP, REGON, wypis z rejestru gruntów, mapy z zaznaczonymi działkami ewidencyjnymi i rolnymi, rodzaj uprawy w przypadku gospodarstw rolnych),</label>
+        </div>
+        <div class="form-check-custom">
+            <input asp-for="Zal_PlanySytuacyjne" class="form-check-input-custom" type="checkbox" />
+            <label class="form-check-label">plany sytuacyjne budynków inwentarskich, produkcyjnych, magazynów i innych budynków pomocniczych znajdujących się na terenie gospodarstwa lub przedsiębiorstwa,</label>
+        </div>
+        <div class="form-check-custom">
+            <input asp-for="Zal_PlanyProdukcyjne" class="form-check-input-custom" type="checkbox" />
+            <label class="form-check-label">plany produkcyjne określające wielkość i rodzaj produkcji (w przypadku gospodarstw rolnych: plany produkcji roślinnej, plany produkcji zwierzęcej),</label>
+        </div>
+        <div class="form-check-custom">
+            <input asp-for="Zal_SkladProduktu" class="form-check-input-custom" type="checkbox" />
+            <label class="form-check-label">skład produktu wraz z określeniem wydajności, a przypadku gospodarstw rolnych szacowną wielkość produkcji zwierzęcej,</label>
+        </div>
+
+    <div class="form-row mt-4 mb-4" style="margin-top: 80px; margin-bottom: 40px;">
+        <div class="col-50 text-center">
+            <p style="border-bottom: 1px dotted black; width: 90%; margin: 0 auto 5px auto; height: 20px;"></p>
+            <strong class="fw-bold">Data i miejsce</strong>
+        </div>
+        <div class="col-50 text-center">
+            <p style="border-bottom: 1px dotted black; width: 90%; margin: 0 auto 5px auto; height: 20px;"></p>
+            <strong class="fw-bold">Podpis osoby upoważnionej do reprezentowania</strong>
+        </div>
+    </div>
+
+    <div class="mt-4 text-center no-print pb-5">
+        <button type="submit" class="btn-custom btn-success-custom" style="margin-right: 15px;">Zapisz w systemie</button>
+        <button type="button" onclick="window.print()" class="btn-custom btn-info-custom">Drukuj / PDF</button>
+    </div>
+</form>
+
+<hr class="mt-5 no-print" style="border: 0; border-top: 1px solid #eee; margin-top: 40px;" />
+<div class="text-center small text-muted mb-4 container-custom">
+    <p>ul. Solec 18 lok. u51, 00-410 Warszawa, Polska</p>
+    <p>Tel/fax: +48 22 696 52 70, </p>
+    <p>www.qafp.pl, qafp@upemi.pl</p>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

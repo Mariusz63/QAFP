@@ -1,0 +1,13 @@
+﻿@model QAFPForm.Models.ErrorViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Wystąpił błąd</h1>
+
+<p>ID zgłoszenia: @Model.RequestId</p>
+
+@if (Model.ShowRequestId)
+{
+    <p>Prosimy o przekazanie tego ID administratorowi w celu identyfikacji błędu.</p>
+}
