@@ -274,115 +274,141 @@ textarea.form-control-custom {
 }
 
 /* ----------------------------------------------------- */
-/* USTAWIENIA DRUKOWANIA (A4, 2 Strony, Identyczny wygląd) */
+/* USTAWIENIA DRUKOWANIA (A4) */
 /* ----------------------------------------------------- */
-@@media print {
+@media print {
 
-    @@page {
-        size: A4;
-        margin: 8mm 8mm 8mm 8mm; /* Jeszcze mniejsze marginesy */
+    /* Lepsza kompatybilność z drukarkami */
+    @page {
+        size: A4 portrait;
+        margin: 12mm 14mm 14mm 14mm;
     }
 
+    /* Reset */
     body {
-        font-size: 9px !important; /* MNIEJSZA czcionka */
-        line-height: 1.05 !important; /* Bardzo zbite odstępy */
-        transform: scale(0.90); /* Silniejsze pomniejszenie */
-        transform-origin: top left;
-        width: 100%;
+        font-size: 11px !important;
+        line-height: 1.15 !important;
+        width: 100% !important;
+        transform: none !important;
     }
 
+    /* Umożliwia poprawne drukowanie kolorów i tła */
     * {
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
     }
 
-    .no-print, header, footer, button {
+    .no-print,
+    header, footer,
+    button {
         display: none !important;
     }
-    /* Kolumny zostają, ale bardziej zbite */
+
+    /* -------------------------------------
+       BLOKOWANIE ROZJEŻDŻANIA STRON
+       ------------------------------------- */
+
+    /* Nie zezwalaj na łamanie w środku sekcji */
+    h1, h2, h3, h4, h5,
+    .section-header,
+    .confirm-box,
+    .legend-section,
+    .obiekty-dzialki-table,
+    .rodzaj-dzialalnosci-table,
+    .form-row,
+    .form-check-custom,
+    .rd-cell, .od-cell {
+        page-break-inside: avoid !important;
+    }
+
+    /* Ulepszone kolumny – zawsze podlegają łamaniu poprawnie */
     .form-row {
-        display: flex !important;
         flex-wrap: nowrap !important;
-        margin-bottom: 3px !important;
+        gap: 10px;
+        margin-bottom: 6px !important;
     }
 
     .col-50, .col-33 {
-        page-break-inside: avoid;
-        padding-left: 5px !important;
-        padding-right: 5px !important;
-    }
-    /* Mniejsze odstępy */
-    .mb-3 {
-        margin-bottom: 4px !important;
+        padding: 0 6px !important;
+        box-sizing: border-box;
     }
 
-    .mb-2 {
-        margin-bottom: 3px !important;
-    }
-
-    .mt-4 {
-        margin-top: 8px !important;
-    }
-
-    .p-2 {
-        padding: 3px !important;
-    }
-    /* Etkiety */
-    .form-label-custom {
-        font-size: 9px !important;
-        margin-bottom: 1px !important;
-    }
-    /* Pola formularzy */
+    /* Pola formularzy bardziej czytelne */
     .form-control-custom,
     .form-select-custom {
-        font-size: 9px !important;
-        padding: 1px 3px !important;
-        min-height: 18px !important;
+        font-size: 11px !important;
+        padding: 3px 5px !important;
+        min-height: 20px !important;
     }
 
     textarea.form-control-custom {
-        line-height: 1.05 !important;
-        padding: 2px 3px !important;
+        padding: 3px 5px !important;
+        line-height: 1.15 !important;
     }
-    /* Checkboxy i radiobuttony */
-    .form-check-custom {
-        min-height: 1rem !important;
+
+    /* Etkiety formularzy */
+    .form-label-custom {
+        font-size: 10px !important;
         margin-bottom: 2px !important;
     }
 
-    .form-check-input-custom {
-        margin-top: 0 !important;
-    }
     /* Nagłówki sekcji */
     .section-header {
-        font-size: 0.9rem !important;
-        padding: 5px 7px !important;
-        margin-top: 10px !important;
-    }
-    /* Box potwierdzenia */
-    .confirm-box {
-        padding: 5px !important;
-        margin-bottom: 10px !important;
+        font-size: 1rem !important;
+        padding: 6px 10px !important;
+        margin-top: 12px !important;
     }
 
+    /* Tabele grid (sekcja V + III) – stabilizacja */
+    .obiekty-dzialki-table,
+    .rodzaj-dzialalnosci-table {
+        display: grid !important;
+        break-inside: avoid !important;
+        page-break-inside: avoid !important;
+    }
+
+    .rd-cell, .od-cell, .od-header {
+        padding: 6px 5px !important;
+        font-size: 10px !important;
+        height: auto !important;
+        min-height: 28px !important;
+    }
+
+    .rd-label, .od-label {
+        font-size: 10px !important;
+        gap: 4px !important;
+    }
+
+    .rd-checkbox, .od-checkbox {
+        transform: scale(0.9) !important;
+    }
+
+    /* Sekcja potwierdzenia */
     .confirm-header {
-        font-size: 0.85rem !important;
-        padding: 5px 7px !important;
+        font-size: 0.9rem !important;
+        padding: 6px 8px !important;
     }
 
     .confirm-body {
-        min-height: 25px !important;
-        padding: 5px !important;
+        min-height: 30px !important;
     }
 
     .confirm-footer {
-        font-size: 7px !important;
-        padding-top: 3px !important;
+        font-size: 8px !important;
+        margin-top: 3px !important;
     }
 
-    .alert-custom {
-        font-size: 8px !important;
-        padding: 6px !important;
-        margin-top: 10px !important;
+    /* Marginesy pionowe */
+    .mb-3 {
+        margin-bottom: 6px !important;
+    }
+
+    .mb-2 {
+        margin-bottom: 4px !important;
+    }
+
+    .mt-4 {
+        margin-top: 12px !important;
     }
 }
+
