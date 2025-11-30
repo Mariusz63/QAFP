@@ -30,7 +30,7 @@ namespace QAFPForm.Models
 
 
         [Display(Name = "PESEL")]
-        [StringLength(14)]
+        [StringLength(11)]
         public string? Pesel { get; set; }
 
         [Display(Name = "REGON")]
@@ -46,17 +46,9 @@ namespace QAFPForm.Models
         // ==========================================
         // II. ADRES
         // ==========================================
-        [Required(ErrorMessage = "Pole Adres Siedziby jest wymagane.")]
-        [Display(Name = "Siedziby")]
-        public string? Siedziba { get; set; }
-
-        [Required(ErrorMessage = "Pole Adres Zakładu jest wymagane.")]
-        [Display(Name = "Zakładu lub gospodarstwa")]
-        public string? Zaklad { get; set; }
-
-        [Required(ErrorMessage = "Pole Adres do korespondencji jest wymagane.")]
-        [Display(Name = "Adres do korespondencji")]
-        public string? Korespondencja { get; set; }
+        public Address AdresSiedziba { get; set; } = new Address();
+        public Address AdresZaklad { get; set; } = new Address();
+        public Address AdresKorespondencja { get; set; } = new Address();
 
         // ==========================================
         // III. RODZAJ DZIAŁALNOŚCI (Checkbox'y)
@@ -113,22 +105,16 @@ namespace QAFPForm.Models
         [Display(Name = "Działki")]
         public bool Dzialki { get; set; }
 
-        [Display(Name = "Całkowita pow.")] 
+        [Display(Name = "Całkowita pow.")]
         public double CalkowitaPow { get; set; } = 0;
 
-        [Display(Name = "Powierzchnia UR")] 
+        [Display(Name = "Powierzchnia UR")]
         public double PowierzchniaUR { get; set; } = 0;
 
         // ==========================================
         // VI. RODZAJ I WIELKOŚĆ PRODUKCJI
         // ==========================================
-        [Required(ErrorMessage = "Opis rodzaju produkcji jest wymagany.")]
-        [Display(Name = "Rodzaj produkcji")]
-        public string RodzajProdukcjiOpis { get; set; }
-
-        [Required(ErrorMessage = "Określenie wielkości produkcji jest wymagane.")]
-        [Display(Name = "Wielkość (rocznie)")]
-        public string WielkoscProdukcji { get; set; }
+        public List<ProdukcjaItem> Produkcje { get; set; } = new List<ProdukcjaItem>();
 
         // ==========================================
         // VII. PODZLECANIE (Radio Tak/Nie)
@@ -173,5 +159,59 @@ namespace QAFPForm.Models
 
         [Display(Name = "Skład produktu / Szacowana wielkość")]
         public bool Zal_SkladProduktu { get; set; }
+
+        // ==========================================
+        // DATA I MIEJSCE ZŁOŻENIA FORMULARZA
+        // ==========================================
+        [Display(Name = "Data złożenia formuarza")]
+        public DateTime DataZlozenia { get; set; } = DateTime.Now;
+
+        [Required(ErrorMessage = "Musisz podać miejscowość.")]
+        [Display(Name = "Miejsce złożenia formularza")]
+        public string MiejsceZlozenia { get; set; } = string.Empty;
+    }
+
+    public class Address
+    {
+        [Required(ErrorMessage = "Musisz wybrać jednostkę certyfikującą.")]
+        [Display(Name = "Ulica")]
+        public string? Ulica { get; set; }
+
+        [Display(Name = "Nr domu")]
+        public string? NrDomu { get; set; }
+
+        [Display(Name = "Nr lokalu")]
+        public string? NrLokalu { get; set; }
+
+        [Display(Name = "Kod pocztowy")]
+        [RegularExpression(@"\d{2}-\d{3}", ErrorMessage = "Kod pocztowy musi mieć format 00-000")]
+        public string? KodPocztowy { get; set; }
+
+
+        [Display(Name = "Miejscowość")]
+        public string? Miejscowosc { get; set; }
+
+        [Display(Name = "Gmina")]
+        public string? Gmina { get; set; }
+
+        [Display(Name = "Powiat")]
+        public string? Powiat { get; set; }
+
+        [Display(Name = "Województwo")]
+        public string? Wojewodztwo { get; set; } = "Podlaskie";
+
+        [Display(Name = "Kraj")]
+        public string? Kraj { get; set; } = "Polska";
+    }
+
+    public class ProdukcjaItem
+    {
+        [Required(ErrorMessage = "Opis rodzaju produkcji jest wymagany.")]
+        [Display(Name = "Rodzaj produkcji")]
+        public string? RodzajProdukcjiOpis { get; set; }
+
+        [Required(ErrorMessage = "Określenie wielkości produkcji jest wymagane.")]
+        [Display(Name = "Wielkość (rocznie)")]
+        public string WielkoscProdukcji { get; set; } = string.Empty;
     }
 }
