@@ -173,7 +173,7 @@ namespace QAFPForm.Models
 
     public class Address
     {
-        [Required(ErrorMessage = "Musisz wybrać jednostkę certyfikującą.")]
+        [Required(ErrorMessage = "Musisz podać nazwę ulicy.")]
         [Display(Name = "Ulica")]
         public string? Ulica { get; set; }
 
@@ -187,7 +187,7 @@ namespace QAFPForm.Models
         [RegularExpression(@"\d{2}-\d{3}", ErrorMessage = "Kod pocztowy musi mieć format 00-000")]
         public string? KodPocztowy { get; set; }
 
-
+        [Required(ErrorMessage = "Musisz podać nazwę miejscowości.")]
         [Display(Name = "Miejscowość")]
         public string? Miejscowosc { get; set; }
 

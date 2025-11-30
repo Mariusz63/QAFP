@@ -2,6 +2,7 @@
 using QAFPForm.Models;
 using QAFPForm.Services;
 using System.Linq;
+using System.Xml.Serialization;
 
 namespace QAFPForm.Controllers
 {
@@ -52,18 +53,45 @@ namespace QAFPForm.Controllers
             _store.Add(model);
 
             XmlService.Save(model);
+            ViewBag.XmlSaved = true; // komunikat
 
             return RedirectToAction("Index", new { id = model.Id });
         }
 
-        public IActionResult DownloadXml(int id)
-        {
-            var model = _store.FirstOrDefault(x => x.Id == id);
-            if (model == null) return NotFound();
 
-            byte[] xmlBytes = XmlService.ExportSingle(model);
-            return File(xmlBytes, "application/xml", $"submission_{id}.xml");
+        [HttpPost]
+        public IActionResult DownloadXml(FormSubmission model)
+        {
+            // Serializacja modelu do XML
+            var serializer = new XmlSerializer(typeof(FormSubmission));
+
+            using var stringWriter = new StringWriter();
+            serializer.Serialize(stringWriter, model);
+            var xmlContent = stringWriter.ToString();
+            var xmlBytes = System.Text.Encoding.UTF8.GetBytes(xmlContent);
+
+            return File(xmlBytes, "application/xml", "zgloszenie_qafp.xml");
         }
+
+
+        public IActionResult Weryfikacja()
+        {
+            // Zakładam że zapisujesz dane w XML
+            string path = Path.Combine(Directory.GetCurrentDirectory(), "Data", "submission.xml");
+
+            if (!System.IO.File.Exists(path))
+                return NotFound("Brak danych do weryfikacji.");
+
+            var xml = System.IO.File.ReadAllText(path);
+
+            // Deserialize XML -> model
+            XmlSerializer serializer = new XmlSerializer(typeof(FormSubmission));
+            using var reader = new StringReader(xml);
+            var model = (FormSubmission)serializer.Deserialize(reader);
+
+            return View(model);
+        }
+
 
         [HttpGet]
         public IActionResult List()

@@ -87,7 +87,7 @@ namespace QAFPForm.Services
                 new XElement("Zal_PlanyProdukcyjne", model.Zal_PlanyProdukcyjne),
                 new XElement("Zal_SkladProduktu", model.Zal_SkladProduktu),
                 
-            new XElement("DataZlozenia", model.DataZlozenia),
+                new XElement("DataZlozenia", model.DataZlozenia),
                 new XElement("MiejsceZlozenia", model.MiejsceZlozenia)
             );
         }

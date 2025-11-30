@@ -1,0 +1,34 @@
+﻿@model QAFPForm.Models.FormSubmission
+
+<h2>Weryfikacja zgłoszenia</h2>
+<hr />
+
+<h4>Dane podstawowe</h4>
+<p><strong>Imię:</strong> @Model.Imie</p>
+<p><strong>Nazwisko:</strong> @Model.Nazwisko</p>
+<p><strong>Telefon:</strong> @Model.Telefon</p>
+<p><strong>Email:</strong> @Model.Email</p>
+
+<h4>Adres siedziby</h4>
+<p>@Model.AdresSiedziba.Ulica @Model.AdresSiedziba.NrDomu/@Model.AdresSiedziba.NrLokalu</p>
+<p>@Model.AdresSiedziba.KodPocztowy @Model.AdresSiedziba.Miejscowosc</p>
+
+<h4>Działalność</h4>
+<ul>
+    @if(Model.ProdukcjaZwierzeca) { <li>Produkcja zwierzęca</li> }
+    @if(Model.Uboj) { <li>Ubój</li> }
+    @if(Model.Rozbior) { <li>Rozbiór</li> }
+    @if(Model.Przetworstwo) { <li>Przetwórstwo</li> }
+</ul>
+
+<h4>Produkcje</h4>
+@foreach(var p in Model.Produkcje)
+{
+    <p>- @p.RodzajProdukcjiOpis : @p.WielkoscProdukcji</p>
+}
+
+<hr />
+
+<a asp-controller="Form" asp-action="DownloadXml" class="btn btn-secondary">
+    Pobierz XML
+</a>
