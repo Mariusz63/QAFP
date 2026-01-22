@@ -1,0 +1,487 @@
+﻿@using QAFPform.Models.Enums
+@model QAFPform.Models.ViewModels.FormularzViewModel
+@{
+    ViewData["Title"] = "Formularz Zgłoszeniowy QAFP";
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@* --- STYLE LOKALNE (Docelowo przenieść do site.css) --- *@
+<style>
+    body {
+        background-color: #f4f7f9;
+    }
+
+    .section-header {
+        border-left: 5px solid #0d6efd;
+        padding-left: 15px;
+        margin-top: 2rem;
+    }
+
+    .form-check-input {
+        cursor: pointer;
+        transform: scale(1.25);
+    }
+
+    .form-check-label {
+        cursor: pointer;
+        padding-left: 0.5rem;
+    }
+
+    .footer-logo {
+        max-height: 80px;
+        filter: grayscale(20%);
+    }
+</style>
+
+<h1 class="text-center mb-4 text-uppercase fw-bold h3">Zgłoszenie uczestnictwa w systemie jakości żywności QAFP</h1>
+
+<form asp-action="Index" asp-controller="Formularz" method="post" class="container bg-white border rounded shadow-sm p-4 mb-5">
+    @Html.AntiForgeryToken()
+
+    <div class="validation-summary">
+        <div asp-validation-summary="All" class="text-danger"></div>
+    </div>
+
+    <h4 class="section-header">I. DANE PRZEDSIĘBIORSTWA LUB GOSPODARSTWA ROLNEGO</h4>
+    <hr />
+
+    <div class="mb-3">
+        <label asp-for="Formularz.Nazwa" class="form-label fw-bold"></label>
+        <input asp-for="Formularz.Nazwa" class="form-control" placeholder="Pełna nazwa firmy lub gospodarstwa" />
+        <span asp-validation-for="Formularz.Nazwa" class="text-danger"></span>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <label asp-for="Formularz.Imie" class="form-label"></label>
+            <input asp-for="Formularz.Imie" class="form-control" />
+            <span asp-validation-for="Formularz.Imie" class="text-danger"></span>
+        </div>
+        <div class="col-md-6">
+            <label asp-for="Formularz.Nazwisko" class="form-label"></label>
+            <input asp-for="Formularz.Nazwisko" class="form-control" />
+            <span asp-validation-for="Formularz.Nazwisko" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <label asp-for="Formularz.Telefon" class="form-label"></label>
+            <input asp-for="Formularz.Telefon" class="form-control" placeholder="+48..." />
+            <span asp-validation-for="Formularz.Telefon" class="text-danger"></span>
+        </div>
+        <div class="col-md-6">
+            <label asp-for="Formularz.Email" class="form-label"></label>
+            <input asp-for="Formularz.Email" class="form-control" placeholder="nazwa@domena.pl" />
+            <span asp-validation-for="Formularz.Email" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <label asp-for="Formularz.Pesel" class="form-label">PESEL</label>
+            <input asp-for="Formularz.Pesel" class="form-control" />
+            <span asp-validation-for="Formularz.Pesel" class="text-danger"></span>
+        </div>
+        <div class="col-md-4">
+            <label asp-for="Formularz.Regon" class="form-label">REGON</label>
+            <input asp-for="Formularz.Regon" class="form-control" />
+            <span asp-validation-for="Formularz.Regon" class="text-danger"></span>
+        </div>
+        <div class="col-md-4">
+            <label asp-for="Formularz.Nip" class="form-label">NIP</label>
+            <input asp-for="Formularz.Nip" class="form-control" />
+            <span asp-validation-for="Formularz.Nip" class="text-danger"></span>
+        </div>
+    </div>
+    <h4 class="section-header">II. ADRES</h4>
+    <hr />
+
+    <h5 class="mt-3 text-secondary">Adres siedziby</h5>
+    <partial name="_Adres" model="Model.Formularz.AdresSiedziby" />
+
+    <h5 class="mt-4 text-secondary">Adres zakładu lub gospodarstwa</h5>
+    <partial name="_Adres" model="Model.Formularz.ZakladuLubGospodarstwa" />
+
+    <h5 class="mt-4 text-secondary">Adres korespondencyjny</h5>
+    <div class="form-check mb-3">
+        <input class="form-check-input" type="checkbox" id="copyAddress">
+        <label class="form-check-label" for="copyAddress">
+            Adres korespondencyjny taki sam jak siedziby
+        </label>
+    </div>
+    <div id="adres-korespondencyjny-container">
+        <partial name="_Adres" model="Model.Formularz.AdresKorespondencyjny" />
+    </div>
+    <h4 class="section-header">III. RODZAJ DZIAŁALNOŚCI</h4>
+    <hr />
+    <div class="row g-3">
+        <div class="col-md-6">
+            <div class="card h-100 bg-light border-0">
+                <div class="card-body">
+                    <h6 class="card-title text-muted mb-3">Produkcja i Obróbka</h6>
+                    <div class="form-check">
+                        <input asp-for="Formularz.ProdukcjaZwierzeca" class="form-check-input" />
+                        <label asp-for="Formularz.ProdukcjaZwierzeca" class="form-check-label"></label>
+                    </div>
+                    <div class="form-check">
+                        <input asp-for="Formularz.Uboj" class="form-check-input" />
+                        <label asp-for="Formularz.Uboj" class="form-check-label"></label>
+                    </div>
+                    <div class="form-check">
+                        <input asp-for="Formularz.Rozbior" class="form-check-input" />
+                        <label asp-for="Formularz.Rozbior" class="form-check-label"></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card h-100 bg-light border-0">
+                <div class="card-body">
+                    <h6 class="card-title text-muted mb-3">Przetwórstwo i Dystrybucja</h6>
+                    <div class="form-check">
+                        <input asp-for="Formularz.Przetworstwo" class="form-check-input" />
+                        <label asp-for="Formularz.Przetworstwo" class="form-check-label"></label>
+                    </div>
+                    <div class="form-check">
+                        <input asp-for="Formularz.ProdukcjaKonserw" class="form-check-input" />
+                        <label asp-for="Formularz.ProdukcjaKonserw" class="form-check-label"></label>
+                    </div>
+                    <div class="form-check">
+                        <input asp-for="Formularz.Dystrybucja" class="form-check-input" />
+                        <label asp-for="Formularz.Dystrybucja" class="form-check-label"></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex align-items-center gap-2">
+        <h4 class="section-header mb-0">IV. ZAKRES PRODUKCJIE</h4>
+        <small class="text-muted small ms-2" style="position: relative; top: 15px;">(* Zaznacz właściwe będące w użytkowaniu podmiotu)</small>
+    </div>
+    <hr />
+    <div class="d-flex align-items-center gap-3 py-2">
+        <div class="form-check mb-0">
+            <input asp-for="Formularz.CzyCalosc" class="form-check-input" style="width: 1rem; height: 1rem;">
+            <label asp-for="Formularz.CzyCalosc" class="form-check-label"></label>
+        </div>
+        <span class="text-muted">|</span>
+        <div class="d-flex align-items-center gap-2">
+            <label asp-for="Formularz.ProcentProdukcji" class="mb-0">lub procent produkcji:</label>
+            <div class="input-group input-group-sm" style="width: 90px;">
+                <input asp-for="Formularz.ProcentProdukcji" type="number" min="0" max="100"
+                       class="form-control text-center"
+                       oninput="this.value=Math.max(0, Math.min(100, this.value))">
+                <span class="input-group-text bg-transparent">%</span>
+            </div>
+        </div>
+        <span asp-validation-for="Formularz.ProcentProdukcji" class="text-danger small"></span>
+    </div>
+
+    <div class="mt-4">
+        <h4 class="section-header d-inline mb-0">V. OBIEKT I DZIAŁKI ROLNE</h4>
+        <small class="text-muted" style="bottom: 20px">(* Zaznacz właściwe będące w użytkowaniu podmiotu)</small>
+    </div>
+    <hr />
+    <div class="d-flex flex-wrap align-items-center gap-3 p-3 border rounded mb-3 bg-light">
+
+        <div class="form-check me-3">
+            <input asp-for="Formularz.Obiekty" class="form-check-input" style="transform: scale(1.2);" />
+            <label asp-for="Formularz.Obiekty" class="form-check-label fw-bold text-uppercase ms-1"></label>
+        </div>
+
+        <div class="vr d-none d-md-block mx-2 text-secondary"></div>
+
+        <div class="form-check">
+            <input asp-for="Formularz.Produkcyjne" class="form-check-input" />
+            <label asp-for="Formularz.Produkcyjne" class="form-check-label"></label>
+        </div>
+
+        <div class="form-check">
+            <input asp-for="Formularz.Magazynowe" class="form-check-input" />
+            <label asp-for="Formularz.Magazynowe" class="form-check-label"></label>
+        </div>
+
+        <div class="form-check">
+            <input asp-for="Formularz.Oczyszczalnie" class="form-check-input" />
+            <label asp-for="Formularz.Oczyszczalnie" class="form-check-label"></label>
+        </div>
+
+        <div class="form-check">
+            <input asp-for="Formularz.Odpady" class="form-check-input" />
+            <label asp-for="Formularz.Odpady" class="form-check-label"></label>
+        </div>
+    </div>
+
+    <div class="d-flex flex-wrap align-items-center gap-3 p-3 border rounded bg-light">
+
+        <div class="form-check me-3">
+            <input asp-for="Formularz.Dzialki" class="form-check-input" style="transform: scale(1.2);" />
+            <label asp-for="Formularz.Dzialki" class="form-check-label fw-bold text-uppercase ms-1"></label>
+        </div>
+
+        <div class="vr d-none d-md-block mx-2 text-secondary"></div>
+
+        <div class="d-flex align-items-center gap-2">
+            <label asp-for="Formularz.CalkowitaPow" class="text-nowrap mb-0 small"></label>
+            <input asp-for="Formularz.CalkowitaPow" class="form-control form-control-sm text-center" style="width: 100px;" placeholder="ha" />
+        </div>
+
+        <div class="d-flex align-items-center gap-2 ms-md-3">
+            <label asp-for="Formularz.PowierzchniaUR" class="text-nowrap mb-0 small"></label>
+            <input asp-for="Formularz.PowierzchniaUR" class="form-control form-control-sm text-center" style="width: 100px;" placeholder="ha" />
+        </div>
+    </div>
+    <h4 class="section-header">VI. RODZAJ I WIELKOŚĆ PRODUKCJI</h4>
+    <hr />
+
+    <div id="produkcje-list">
+        @for (int i = 0; i < Model.Formularz.Produkcje.Count; i++)
+        {
+            <div class="produkcja-item row mb-3 align-items-end g-2">
+                <div class="col-md-5">
+                    <label asp-for="@Model.Formularz.Produkcje[i].RodzajProdukcjiOpis" class="form-label small"></label>
+                    <input asp-for="@Model.Formularz.Produkcje[i].RodzajProdukcjiOpis" class="form-control" placeholder="Np. Tuczniki" />
+                    <span asp-validation-for="@Model.Formularz.Produkcje[i].RodzajProdukcjiOpis" class="text-danger"></span>
+                </div>
+                <div class="col-md-5">
+                    <label asp-for="@Model.Formularz.Produkcje[i].WielkoscProdukcji" class="form-label small"></label>
+                    <input asp-for="@Model.Formularz.Produkcje[i].WielkoscProdukcji" class="form-control" placeholder="Ilość w skali roku" />
+                    <span asp-validation-for="@Model.Formularz.Produkcje[i].WielkoscProdukcji" class="text-danger"></span>
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-outline-danger w-100 remove-produkcja">
+                        <i class="bi bi-trash"></i> Usuń
+                    </button>
+                </div>
+            </div>
+        }
+    </div>
+
+    <button type="button" id="add-produkcja" class="btn btn-secondary btn-sm mt-2">
+        <i class="bi bi-plus-circle"></i> Dodaj kolejną pozycję
+    </button>
+    <h4 class="section-header">VII. PODZLECANIE DZIAŁAŃ</h4>
+    <hr />
+
+    <div class="d-flex align-items-center gap-3 py-2">
+        <div class="form-check mb-0">
+            <input asp-for="Formularz.CzyPodzlecanie" class="form-check-input" style="width: 1rem; height: 1rem;">
+            <label asp-for="Formularz.CzyPodzlecanie" class="form-check-label"></label>
+        </div>
+
+        <div class="d-flex align-items-center flex-grow-1 gap-2">
+            <label asp-for="Formularz.RodzajPodzlecanych" class="mb-0 text-nowrap">Rodzaj działań:</label>
+            <input asp-for="Formularz.RodzajPodzlecanych" class="form-control form-control-sm"
+                   placeholder="Wpisz jakie..." />
+        </div>
+    </div>
+
+    <span asp-validation-for="Formularz.RodzajPodzlecanych" class="text-danger small d-block"></span>
+    <h4 class="section-header">VIII. TRANSPORT</h4>
+    <hr />
+    <div class="col-md-6">
+        <label asp-for="Formularz.Transport" class="form-label"></label>
+        <select asp-for="Formularz.Transport" asp-items="Html.GetEnumSelectList<TransportTyp>()" class="form-select">
+            <option value="">-- wybierz --</option>
+        </select>
+        <span asp-validation-for="Formularz.Transport" class="text-danger"></span>
+    </div>
+    <h4 class="section-header">IX. OPIS PROCESU PRODUKCJI / GOSPODARSTWA</h4>
+    <hr />
+    <div class="mb-3">
+        <textarea asp-for="Formularz.OpisProcesu" class="form-control" rows="5" placeholder="Krótki opis technologii produkcji lub specyfiki gospodarstwa..."></textarea>
+        <span asp-validation-for="Formularz.OpisProcesu" class="text-danger"></span>
+    </div>
+    <h4 class="section-header">X. JEDNOSTKA CERTYFIKUJĄCA</h4>
+    <hr />
+    <div class="col-md-6">
+        <select asp-for="Formularz.JednostkaCertyfikujaca" class="form-select">
+            <option value="">-- Wybierz jednostkę --</option>
+            <option value="AgroEko">Centrum Jakości AgroEko Sp. z o.o.</option>
+            <option value="Kiwa">Kiwa Polska Sp. z o.o.</option>
+            <option value="Cobico">Biuro Certyfikacji COBICO</option>
+            <option value="GwarantowanaJakosc">Krajowe Centrum Badań i Certyfikacji "Gwarantowana Jakość"</option>
+            <option value="Biocert">BIOCERT MAŁOPOLSKA Sp. z o.o.</option>
+            <option value="eCO2">eCO2 Sp. z o.o.</option>
+        </select>
+        <span asp-validation-for="Formularz.JednostkaCertyfikujaca" class="text-danger"></span>
+    </div>
+
+    <!-- ===================== Załączniki ===================== -->
+    <div class="mt-3 mb-2">
+        <strong class="fw-bold">Do zgłoszenia załączam:</strong>
+    </div>    <div class="form-check mb-1">
+        <input asp-for="Formularz.Zal_DokumentyStatus" class="form-check-input" type="checkbox" id="Zal_DokumentyStatus" />
+        <label asp-for="Formularz.Zal_DokumentyStatus" class="form-check-label">
+            dokumenty potwierdzające status zgłaszającego (np. NIP, REGON, wypis z rejestru gruntów, mapy z zaznaczonymi działkami ewidencyjnymi i rolnymi, rodzaj uprawy w przypadku gospodarstw rolnych),
+        </label>
+    </div>
+
+    <div class="form-check mb-1">
+        <input asp-for="Formularz.Zal_PlanySytuacyjne" class="form-check-input" type="checkbox" id="Zal_PlanySytuacyjne" />
+        <label asp-for="Formularz.Zal_PlanySytuacyjne" class="form-check-label">
+            plany sytuacyjne budynków inwentarskich, produkcyjnych, magazynów i innych budynków pomocniczych znajdujących się na terenie gospodarstwa lub przedsiębiorstwa,
+        </label>
+    </div>
+
+    <div class="form-check mb-1">
+        <input asp-for="Formularz.Zal_PlanyProdukcyjne" class="form-check-input" type="checkbox" id="Zal_PlanyProdukcyjne" />
+        <label asp-for="Formularz.Zal_PlanyProdukcyjne" class="form-check-label">
+            plany produkcyjne określające wielkość i rodzaj produkcji (w przypadku gospodarstw rolnych: plany produkcji roślinnej, plany produkcji zwierzęcej),
+        </label>
+    </div>
+
+    <div class="form-check mb-1">
+        <input asp-for="Formularz.Zal_SkladProduktu" class="form-check-input" type="checkbox" id="Zal_SkladProduktu" />
+        <label asp-for="Formularz.Zal_SkladProduktu" class="form-check-label">
+            skład produktu wraz z określeniem wydajności, a przypadku gospodarstw rolnych szacowną wielkość produkcji zwierzęcej.
+        </label>
+    </div>
+
+    <!-- ===================== Data i miesce złożenia formularza ===================== -->
+    <div class="row mt-5 pt-2 border-top">
+        <div class="col-md-3">
+            <label asp-for="Formularz.DataZlozenia" class="form-label fw-bold">Data złożenia:</label>
+            <input asp-for="Formularz.DataZlozenia" type="date" class="form-control" />
+            <span asp-validation-for="Formularz.DataZlozenia" class="text-danger small"></span>
+        </div>
+        <div class="col-md-9">
+            <label asp-for="Formularz.MiejsceZlozenia" class="form-label fw-bold">Miejscowość:</label>
+            <input asp-for="Formularz.MiejsceZlozenia" class="form-control" placeholder="Wpisz nazwę miejscowości..." />
+            <span asp-validation-for="Formularz.MiejsceZlozenia" class="text-danger small"></span>
+        </div>
+    </div>
+
+    <!-- ===================== Przyciski ===================== -->
+    <div class="d-flex justify-content-end gap-3 mt-5">
+        <a href="/" class="btn btn-outline-secondary btn-lg px-3">Anuluj</a>
+        <button type="Submit" asp-action="Index" asp-controller="Formularz" class="btn btn-primary btn-lg px-5">Wyślij formularz</button>
+    </div>
+</form>
+
+<!-- ===================== Stopka ===================== -->
+<div class="d-flex align-items-center justify-content-center gap-4 mt-5 mb-5 footer-container">
+    <img src="~/images/upemi.jpg" alt="Logo UPEMI" class="footer-logo" />
+    <div class="footer-text">
+        <p class="fw-bold">Unia Producentów i Pracodawców Przemysłu Mięsnego</p>
+        <p>ul. Solec 18 lok. u51, 00-410 Warszawa, Polska</p>
+        <p>Tel/fax: +48 22 696 52 70</p>
+        <p><a href="https://www.qafp.pl" target="_blank">www.qafp.pl</a>, <a href="mailto:qafp@upemi.pl">qafp@upemi.pl</a></p>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        // === 1. KOPIOWANIE ADRESU ===
+        document.getElementById("copyAddress").addEventListener("change", function () {
+            // Funkcja pomocnicza do pobierania wartości
+            const getValue = (field) => {
+                const el = document.querySelector(`[name='AdresSiedziby.${field}']`);
+                return el ? el.value : '';
+            };
+
+            // Funkcja pomocnicza do ustawiania wartości
+            const setValue = (field, val) => {
+                const el = document.querySelector(`[name='AdresKorespondencyjny.${field}']`);
+                if (el) {
+                    el.value = val;
+                    // Trigger walidacji
+                    $(el).valid();
+                }
+            };
+
+            if (this.checked) {
+                setValue('Ulica', getValue('Ulica'));
+                setValue('NrUlicy', getValue('NrUlicy'));
+                setValue('NrDomu', getValue('NrDomu'));
+                setValue('NrLokalu', getValue('NrLokalu'));
+                setValue('KodPocztowy', getValue('KodPocztowy'));
+                setValue('Miejscowosc', getValue('Miejscowosc'));
+                setValue('Wojewodztwo', getValue('Wojewodztwo'));
+            } else {
+                // Opcjonalnie: czyść pola po odznaczeniu
+                 // setValue('Ulica', ''); ...
+            }
+        });
+
+        // === 2. DYNAMICZNA LISTA  ===
+        const listContainer = document.getElementById('produkcje-list');
+
+        document.getElementById('add-produkcja').addEventListener('click', function () {
+            // Pobierz aktualną liczbę wierszy, aby utworzyć (tymczasowo) unikalny indeks
+            const index = listContainer.children.length;
+
+            // Tworzenie elementu div
+            const div = document.createElement('div');
+            div.className = 'produkcja-item row mb-3 align-items-end g-2';
+
+            // HTML dla nowego wiersza
+            div.innerHTML = `
+                <div class="col-md-5">
+                    <label class="form-label small">Rodzaj produkcji</label>
+                    <input name="Produkcje[${index}].RodzajProdukcjiOpis" class="form-control" placeholder="Wpisz rodzaj..." />
+                </div>
+                <div class="col-md-5">
+                    <label class="form-label small">Wielkość produkcji</label>
+                    <input name="Produkcje[${index}].WielkoscProdukcji" class="form-control" placeholder="Wpisz ilość..." />
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-outline-danger w-100 remove-produkcja">
+                         Usuń
+                    </button>
+                </div>
+            `;
+            listContainer.appendChild(div);
+        });
+
+        // Delegacja zdarzeń dla przycisku usuń (działa też dla dynamicznie dodanych)
+        listContainer.addEventListener('click', function (e) {
+            if (e.target.closest('.remove-produkcja')) {
+                e.target.closest('.produkcja-item').remove();
+                updateIndices(); //naprawiamy indeksy po usunięciu
+            }
+        });
+
+        // Funkcja naprawiająca indeksy [0], [1], [2]... aby Model Binder ASP.NET zadziałał
+        function updateIndices() {
+            const rows = listContainer.querySelectorAll('.produkcja-item');
+            rows.forEach((row, index) => {
+                const inputs = row.querySelectorAll('input, select, textarea');
+                inputs.forEach(input => {
+                    // Zamienia np. Produkcje[5].Cos na Produkcje[2].Cos
+                    if (input.name) {
+                        input.name = input.name.replace(/\[\d+\]/, `[${index}]`);
+                    }
+                    if (input.id) {
+                         input.id = input.id.replace(/_\d+__/, `_${index}__`);
+                    }
+                });
+
+                // Aktualizacja spanów walidacji
+                const spans = row.querySelectorAll('span[data-valmsg-for]');
+                spans.forEach(span => {
+                    let forAttr = span.getAttribute('data-valmsg-for');
+                    if (forAttr) {
+                        span.setAttribute('data-valmsg-for', forAttr.replace(/\[\d+\]/, `[${index}]`));
+                    }
+                });
+            });
+        }
+
+        // === 3. AUTO DATA ===
+        // Ustaw dzisiejszą datę jeśli pole jest puste
+        window.addEventListener('load', function() {
+            const dateInput = document.querySelector("input[type='date']");
+            if(dateInput && !dateInput.value) {
+                dateInput.valueAsDate = new Date();
+            }
+        });
+    </script>
+}

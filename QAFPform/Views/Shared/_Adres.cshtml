@@ -1,0 +1,51 @@
+﻿@using QAFPform.Models.Enums
+@model Adres
+
+<div class="border rounded p-3 mb-4 bg-light">
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <label asp-for="Ulica" class="form-label"></label>
+            <input asp-for="Ulica" class="form-control" />
+            <span asp-validation-for="Ulica" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-3">
+            <label asp-for="NrUlicy" class="form-label"></label>
+            <input asp-for="NrUlicy" class="form-control" />
+        </div>
+
+        <div class="col-md-3">
+            <label asp-for="NrDomu" class="form-label"></label>
+            <input asp-for="NrDomu" class="form-control" />
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-3">
+            <label asp-for="NrLokalu" class="form-label"></label>
+            <input asp-for="NrLokalu" class="form-control" />
+        </div>
+
+        <div class="col-md-3">
+            <label asp-for="KodPocztowy" class="form-label"></label>
+            <input asp-for="KodPocztowy" class="form-control" placeholder="00-000" />
+            <span asp-validation-for="KodPocztowy" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="Miejscowosc" class="form-label"></label>
+            <input asp-for="Miejscowosc" class="form-control" />
+            <span asp-validation-for="Miejscowosc" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <label asp-for="Wojewodztwo" class="form-label"></label>
+            <select asp-for="Wojewodztwo"
+                    asp-items="Html.GetEnumSelectList<Wojewodztwa>()"
+                    class="form-select">
+            </select>
+        </div>
+    </div>
+</div>
