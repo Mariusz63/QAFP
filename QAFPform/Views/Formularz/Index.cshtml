@@ -1,5 +1,5 @@
 ﻿@using QAFPform.Models.Enums
-@model QAFPform.Models.ViewModels.FormularzViewModel
+@model QAFPform.Models.Formularz
 @{
     ViewData["Title"] = "Formularz Zgłoszeniowy QAFP";
 }
@@ -46,62 +46,62 @@
     <hr />
 
     <div class="mb-3">
-        <label asp-for="Formularz.Nazwa" class="form-label fw-bold"></label>
-        <input asp-for="Formularz.Nazwa" class="form-control" placeholder="Pełna nazwa firmy lub gospodarstwa" />
-        <span asp-validation-for="Formularz.Nazwa" class="text-danger"></span>
+        <label asp-for="Nazwa" class="form-label fw-bold"></label>
+        <input asp-for="Nazwa" class="form-control" placeholder="Pełna nazwa firmy lub gospodarstwa" />
+        <span asp-validation-for="Nazwa" class="text-danger"></span>
     </div>
 
     <div class="row mb-3">
         <div class="col-md-6">
-            <label asp-for="Formularz.Imie" class="form-label"></label>
-            <input asp-for="Formularz.Imie" class="form-control" />
-            <span asp-validation-for="Formularz.Imie" class="text-danger"></span>
+            <label asp-for="Imie" class="form-label"></label>
+            <input asp-for="Imie" class="form-control" />
+            <span asp-validation-for="Imie" class="text-danger"></span>
         </div>
         <div class="col-md-6">
-            <label asp-for="Formularz.Nazwisko" class="form-label"></label>
-            <input asp-for="Formularz.Nazwisko" class="form-control" />
-            <span asp-validation-for="Formularz.Nazwisko" class="text-danger"></span>
+            <label asp-for="Nazwisko" class="form-label"></label>
+            <input asp-for="Nazwisko" class="form-control" />
+            <span asp-validation-for="Nazwisko" class="text-danger"></span>
         </div>
     </div>
 
     <div class="row mb-3">
         <div class="col-md-6">
-            <label asp-for="Formularz.Telefon" class="form-label"></label>
-            <input asp-for="Formularz.Telefon" class="form-control" placeholder="+48..." />
-            <span asp-validation-for="Formularz.Telefon" class="text-danger"></span>
+            <label asp-for="Telefon" class="form-label"></label>
+            <input asp-for="Telefon" class="form-control" placeholder="+48..." />
+            <span asp-validation-for="Telefon" class="text-danger"></span>
         </div>
         <div class="col-md-6">
-            <label asp-for="Formularz.Email" class="form-label"></label>
-            <input asp-for="Formularz.Email" class="form-control" placeholder="nazwa@domena.pl" />
-            <span asp-validation-for="Formularz.Email" class="text-danger"></span>
+            <label asp-for="Email" class="form-label"></label>
+            <input asp-for="Email" class="form-control" placeholder="nazwa@domena.pl" />
+            <span asp-validation-for="Email" class="text-danger"></span>
         </div>
     </div>
 
     <div class="row mb-3">
         <div class="col-md-4">
-            <label asp-for="Formularz.Pesel" class="form-label">PESEL</label>
-            <input asp-for="Formularz.Pesel" class="form-control" />
-            <span asp-validation-for="Formularz.Pesel" class="text-danger"></span>
+            <label asp-for="Pesel" class="form-label">PESEL</label>
+            <input asp-for="Pesel" class="form-control" />
+            <span asp-validation-for="Pesel" class="text-danger"></span>
         </div>
         <div class="col-md-4">
-            <label asp-for="Formularz.Regon" class="form-label">REGON</label>
-            <input asp-for="Formularz.Regon" class="form-control" />
-            <span asp-validation-for="Formularz.Regon" class="text-danger"></span>
+            <label asp-for="Regon" class="form-label">REGON</label>
+            <input asp-for="Regon" class="form-control" />
+            <span asp-validation-for="Regon" class="text-danger"></span>
         </div>
         <div class="col-md-4">
-            <label asp-for="Formularz.Nip" class="form-label">NIP</label>
-            <input asp-for="Formularz.Nip" class="form-control" />
-            <span asp-validation-for="Formularz.Nip" class="text-danger"></span>
+            <label asp-for="Nip" class="form-label">NIP</label>
+            <input asp-for="Nip" class="form-control" />
+            <span asp-validation-for="Nip" class="text-danger"></span>
         </div>
     </div>
     <h4 class="section-header">II. ADRES</h4>
     <hr />
 
     <h5 class="mt-3 text-secondary">Adres siedziby</h5>
-    <partial name="_Adres" model="Model.Formularz.AdresSiedziby" />
+    <partial name="_Adres" model="Model.AdresSiedziby" />
 
     <h5 class="mt-4 text-secondary">Adres zakładu lub gospodarstwa</h5>
-    <partial name="_Adres" model="Model.Formularz.ZakladuLubGospodarstwa" />
+    <partial name="_Adres" model="Model.ZakladuLubGospodarstwa" />
 
     <h5 class="mt-4 text-secondary">Adres korespondencyjny</h5>
     <div class="form-check mb-3">
@@ -111,7 +111,7 @@
         </label>
     </div>
     <div id="adres-korespondencyjny-container">
-        <partial name="_Adres" model="Model.Formularz.AdresKorespondencyjny" />
+        <partial name="_Adres" model="Model.AdresKorespondencyjny" />
     </div>
     <h4 class="section-header">III. RODZAJ DZIAŁALNOŚCI</h4>
     <hr />
@@ -121,16 +121,16 @@
                 <div class="card-body">
                     <h6 class="card-title text-muted mb-3">Produkcja i Obróbka</h6>
                     <div class="form-check">
-                        <input asp-for="Formularz.ProdukcjaZwierzeca" class="form-check-input" />
-                        <label asp-for="Formularz.ProdukcjaZwierzeca" class="form-check-label"></label>
+                        <input asp-for="ProdukcjaZwierzeca" class="form-check-input" />
+                        <label asp-for="ProdukcjaZwierzeca" class="form-check-label"></label>
                     </div>
                     <div class="form-check">
-                        <input asp-for="Formularz.Uboj" class="form-check-input" />
-                        <label asp-for="Formularz.Uboj" class="form-check-label"></label>
+                        <input asp-for="Uboj" class="form-check-input" />
+                        <label asp-for="Uboj" class="form-check-label"></label>
                     </div>
                     <div class="form-check">
-                        <input asp-for="Formularz.Rozbior" class="form-check-input" />
-                        <label asp-for="Formularz.Rozbior" class="form-check-label"></label>
+                        <input asp-for="Rozbior" class="form-check-input" />
+                        <label asp-for="Rozbior" class="form-check-label"></label>
                     </div>
                 </div>
             </div>
@@ -141,16 +141,16 @@
                 <div class="card-body">
                     <h6 class="card-title text-muted mb-3">Przetwórstwo i Dystrybucja</h6>
                     <div class="form-check">
-                        <input asp-for="Formularz.Przetworstwo" class="form-check-input" />
-                        <label asp-for="Formularz.Przetworstwo" class="form-check-label"></label>
+                        <input asp-for="Przetworstwo" class="form-check-input" />
+                        <label asp-for="Przetworstwo" class="form-check-label"></label>
                     </div>
                     <div class="form-check">
-                        <input asp-for="Formularz.ProdukcjaKonserw" class="form-check-input" />
-                        <label asp-for="Formularz.ProdukcjaKonserw" class="form-check-label"></label>
+                        <input asp-for="ProdukcjaKonserw" class="form-check-input" />
+                        <label asp-for="ProdukcjaKonserw" class="form-check-label"></label>
                     </div>
                     <div class="form-check">
-                        <input asp-for="Formularz.Dystrybucja" class="form-check-input" />
-                        <label asp-for="Formularz.Dystrybucja" class="form-check-label"></label>
+                        <input asp-for="Dystrybucja" class="form-check-input" />
+                        <label asp-for="Dystrybucja" class="form-check-label"></label>
                     </div>
                 </div>
             </div>
@@ -164,20 +164,20 @@
     <hr />
     <div class="d-flex align-items-center gap-3 py-2">
         <div class="form-check mb-0">
-            <input asp-for="Formularz.CzyCalosc" class="form-check-input" style="width: 1rem; height: 1rem;">
-            <label asp-for="Formularz.CzyCalosc" class="form-check-label"></label>
+            <input asp-for="CzyCalosc" class="form-check-input" style="width: 1rem; height: 1rem;">
+            <label asp-for="CzyCalosc" class="form-check-label"></label>
         </div>
         <span class="text-muted">|</span>
         <div class="d-flex align-items-center gap-2">
-            <label asp-for="Formularz.ProcentProdukcji" class="mb-0">lub procent produkcji:</label>
+            <label asp-for="ProcentProdukcji" class="mb-0">lub procent produkcji:</label>
             <div class="input-group input-group-sm" style="width: 90px;">
-                <input asp-for="Formularz.ProcentProdukcji" type="number" min="0" max="100"
+                <input asp-for="ProcentProdukcji" type="number" min="0" max="100"
                        class="form-control text-center"
                        oninput="this.value=Math.max(0, Math.min(100, this.value))">
                 <span class="input-group-text bg-transparent">%</span>
             </div>
         </div>
-        <span asp-validation-for="Formularz.ProcentProdukcji" class="text-danger small"></span>
+        <span asp-validation-for="ProcentProdukcji" class="text-danger small"></span>
     </div>
 
     <div class="mt-4">
@@ -188,68 +188,68 @@
     <div class="d-flex flex-wrap align-items-center gap-3 p-3 border rounded mb-3 bg-light">
 
         <div class="form-check me-3">
-            <input asp-for="Formularz.Obiekty" class="form-check-input" style="transform: scale(1.2);" />
-            <label asp-for="Formularz.Obiekty" class="form-check-label fw-bold text-uppercase ms-1"></label>
+            <input asp-for="Obiekty" class="form-check-input" style="transform: scale(1.2);" />
+            <label asp-for="Obiekty" class="form-check-label fw-bold text-uppercase ms-1"></label>
         </div>
 
         <div class="vr d-none d-md-block mx-2 text-secondary"></div>
 
         <div class="form-check">
-            <input asp-for="Formularz.Produkcyjne" class="form-check-input" />
-            <label asp-for="Formularz.Produkcyjne" class="form-check-label"></label>
+            <input asp-for="Produkcyjne" class="form-check-input" />
+            <label asp-for="Produkcyjne" class="form-check-label"></label>
         </div>
 
         <div class="form-check">
-            <input asp-for="Formularz.Magazynowe" class="form-check-input" />
-            <label asp-for="Formularz.Magazynowe" class="form-check-label"></label>
+            <input asp-for="Magazynowe" class="form-check-input" />
+            <label asp-for="Magazynowe" class="form-check-label"></label>
         </div>
 
         <div class="form-check">
-            <input asp-for="Formularz.Oczyszczalnie" class="form-check-input" />
-            <label asp-for="Formularz.Oczyszczalnie" class="form-check-label"></label>
+            <input asp-for="Oczyszczalnie" class="form-check-input" />
+            <label asp-for="Oczyszczalnie" class="form-check-label"></label>
         </div>
 
         <div class="form-check">
-            <input asp-for="Formularz.Odpady" class="form-check-input" />
-            <label asp-for="Formularz.Odpady" class="form-check-label"></label>
+            <input asp-for="Odpady" class="form-check-input" />
+            <label asp-for="Odpady" class="form-check-label"></label>
         </div>
     </div>
 
     <div class="d-flex flex-wrap align-items-center gap-3 p-3 border rounded bg-light">
 
         <div class="form-check me-3">
-            <input asp-for="Formularz.Dzialki" class="form-check-input" style="transform: scale(1.2);" />
-            <label asp-for="Formularz.Dzialki" class="form-check-label fw-bold text-uppercase ms-1"></label>
+            <input asp-for="Dzialki" class="form-check-input" style="transform: scale(1.2);" />
+            <label asp-for="Dzialki" class="form-check-label fw-bold text-uppercase ms-1"></label>
         </div>
 
         <div class="vr d-none d-md-block mx-2 text-secondary"></div>
 
         <div class="d-flex align-items-center gap-2">
-            <label asp-for="Formularz.CalkowitaPow" class="text-nowrap mb-0 small"></label>
-            <input asp-for="Formularz.CalkowitaPow" class="form-control form-control-sm text-center" style="width: 100px;" placeholder="ha" />
+            <label asp-for="CalkowitaPow" class="text-nowrap mb-0 small"></label>
+            <input asp-for="CalkowitaPow" class="form-control form-control-sm text-center" style="width: 100px;" placeholder="ha" />
         </div>
 
         <div class="d-flex align-items-center gap-2 ms-md-3">
-            <label asp-for="Formularz.PowierzchniaUR" class="text-nowrap mb-0 small"></label>
-            <input asp-for="Formularz.PowierzchniaUR" class="form-control form-control-sm text-center" style="width: 100px;" placeholder="ha" />
+            <label asp-for="PowierzchniaUR" class="text-nowrap mb-0 small"></label>
+            <input asp-for="PowierzchniaUR" class="form-control form-control-sm text-center" style="width: 100px;" placeholder="ha" />
         </div>
     </div>
     <h4 class="section-header">VI. RODZAJ I WIELKOŚĆ PRODUKCJI</h4>
     <hr />
 
     <div id="produkcje-list">
-        @for (int i = 0; i < Model.Formularz.Produkcje.Count; i++)
+        @for (int i = 0; i < Model.Produkcje.Count; i++)
         {
             <div class="produkcja-item row mb-3 align-items-end g-2">
                 <div class="col-md-5">
-                    <label asp-for="@Model.Formularz.Produkcje[i].RodzajProdukcjiOpis" class="form-label small"></label>
-                    <input asp-for="@Model.Formularz.Produkcje[i].RodzajProdukcjiOpis" class="form-control" placeholder="Np. Tuczniki" />
-                    <span asp-validation-for="@Model.Formularz.Produkcje[i].RodzajProdukcjiOpis" class="text-danger"></span>
+                    <label asp-for="@Model.Produkcje[i].RodzajProdukcjiOpis" class="form-label small"></label>
+                    <input asp-for="@Model.Produkcje[i].RodzajProdukcjiOpis" class="form-control" placeholder="Np. Tuczniki" />
+                    <span asp-validation-for="@Model.Produkcje[i].RodzajProdukcjiOpis" class="text-danger"></span>
                 </div>
                 <div class="col-md-5">
-                    <label asp-for="@Model.Formularz.Produkcje[i].WielkoscProdukcji" class="form-label small"></label>
-                    <input asp-for="@Model.Formularz.Produkcje[i].WielkoscProdukcji" class="form-control" placeholder="Ilość w skali roku" />
-                    <span asp-validation-for="@Model.Formularz.Produkcje[i].WielkoscProdukcji" class="text-danger"></span>
+                    <label asp-for="@Model.Produkcje[i].WielkoscProdukcji" class="form-label small"></label>
+                    <input asp-for="@Model.Produkcje[i].WielkoscProdukcji" class="form-control" placeholder="Ilość w skali roku" />
+                    <span asp-validation-for="@Model.Produkcje[i].WielkoscProdukcji" class="text-danger"></span>
                 </div>
                 <div class="col-md-2">
                     <button type="button" class="btn btn-outline-danger w-100 remove-produkcja">
@@ -268,37 +268,37 @@
 
     <div class="d-flex align-items-center gap-3 py-2">
         <div class="form-check mb-0">
-            <input asp-for="Formularz.CzyPodzlecanie" class="form-check-input" style="width: 1rem; height: 1rem;">
-            <label asp-for="Formularz.CzyPodzlecanie" class="form-check-label"></label>
+            <input asp-for="CzyPodzlecanie" class="form-check-input" style="width: 1rem; height: 1rem;">
+            <label asp-for="CzyPodzlecanie" class="form-check-label"></label>
         </div>
 
         <div class="d-flex align-items-center flex-grow-1 gap-2">
-            <label asp-for="Formularz.RodzajPodzlecanych" class="mb-0 text-nowrap">Rodzaj działań:</label>
-            <input asp-for="Formularz.RodzajPodzlecanych" class="form-control form-control-sm"
+            <label asp-for="RodzajPodzlecanych" class="mb-0 text-nowrap">Rodzaj działań:</label>
+            <input asp-for="RodzajPodzlecanych" class="form-control form-control-sm"
                    placeholder="Wpisz jakie..." />
         </div>
     </div>
 
-    <span asp-validation-for="Formularz.RodzajPodzlecanych" class="text-danger small d-block"></span>
+    <span asp-validation-for="RodzajPodzlecanych" class="text-danger small d-block"></span>
     <h4 class="section-header">VIII. TRANSPORT</h4>
     <hr />
     <div class="col-md-6">
-        <label asp-for="Formularz.Transport" class="form-label"></label>
-        <select asp-for="Formularz.Transport" asp-items="Html.GetEnumSelectList<TransportTyp>()" class="form-select">
+        <label asp-for="Transport" class="form-label"></label>
+        <select asp-for="Transport" asp-items="Html.GetEnumSelectList<TransportTyp>()" class="form-select">
             <option value="">-- wybierz --</option>
         </select>
-        <span asp-validation-for="Formularz.Transport" class="text-danger"></span>
+        <span asp-validation-for="Transport" class="text-danger"></span>
     </div>
     <h4 class="section-header">IX. OPIS PROCESU PRODUKCJI / GOSPODARSTWA</h4>
     <hr />
     <div class="mb-3">
-        <textarea asp-for="Formularz.OpisProcesu" class="form-control" rows="5" placeholder="Krótki opis technologii produkcji lub specyfiki gospodarstwa..."></textarea>
-        <span asp-validation-for="Formularz.OpisProcesu" class="text-danger"></span>
+        <textarea asp-for="OpisProcesu" class="form-control" rows="5" placeholder="Krótki opis technologii produkcji lub specyfiki gospodarstwa..."></textarea>
+        <span asp-validation-for="OpisProcesu" class="text-danger"></span>
     </div>
     <h4 class="section-header">X. JEDNOSTKA CERTYFIKUJĄCA</h4>
     <hr />
     <div class="col-md-6">
-        <select asp-for="Formularz.JednostkaCertyfikujaca" class="form-select">
+        <select asp-for="JednostkaCertyfikujaca" class="form-select">
             <option value="">-- Wybierz jednostkę --</option>
             <option value="AgroEko">Centrum Jakości AgroEko Sp. z o.o.</option>
             <option value="Kiwa">Kiwa Polska Sp. z o.o.</option>
@@ -307,36 +307,36 @@
             <option value="Biocert">BIOCERT MAŁOPOLSKA Sp. z o.o.</option>
             <option value="eCO2">eCO2 Sp. z o.o.</option>
         </select>
-        <span asp-validation-for="Formularz.JednostkaCertyfikujaca" class="text-danger"></span>
+        <span asp-validation-for="JednostkaCertyfikujaca" class="text-danger"></span>
     </div>
 
     <!-- ===================== Załączniki ===================== -->
     <div class="mt-3 mb-2">
         <strong class="fw-bold">Do zgłoszenia załączam:</strong>
     </div>    <div class="form-check mb-1">
-        <input asp-for="Formularz.Zal_DokumentyStatus" class="form-check-input" type="checkbox" id="Zal_DokumentyStatus" />
-        <label asp-for="Formularz.Zal_DokumentyStatus" class="form-check-label">
+        <input asp-for="Zal_DokumentyStatus" class="form-check-input" type="checkbox" id="Zal_DokumentyStatus" />
+        <label asp-for="Zal_DokumentyStatus" class="form-check-label">
             dokumenty potwierdzające status zgłaszającego (np. NIP, REGON, wypis z rejestru gruntów, mapy z zaznaczonymi działkami ewidencyjnymi i rolnymi, rodzaj uprawy w przypadku gospodarstw rolnych),
         </label>
     </div>
 
     <div class="form-check mb-1">
-        <input asp-for="Formularz.Zal_PlanySytuacyjne" class="form-check-input" type="checkbox" id="Zal_PlanySytuacyjne" />
-        <label asp-for="Formularz.Zal_PlanySytuacyjne" class="form-check-label">
+        <input asp-for="Zal_PlanySytuacyjne" class="form-check-input" type="checkbox" id="Zal_PlanySytuacyjne" />
+        <label asp-for="Zal_PlanySytuacyjne" class="form-check-label">
             plany sytuacyjne budynków inwentarskich, produkcyjnych, magazynów i innych budynków pomocniczych znajdujących się na terenie gospodarstwa lub przedsiębiorstwa,
         </label>
     </div>
 
     <div class="form-check mb-1">
-        <input asp-for="Formularz.Zal_PlanyProdukcyjne" class="form-check-input" type="checkbox" id="Zal_PlanyProdukcyjne" />
-        <label asp-for="Formularz.Zal_PlanyProdukcyjne" class="form-check-label">
+        <input asp-for="Zal_PlanyProdukcyjne" class="form-check-input" type="checkbox" id="Zal_PlanyProdukcyjne" />
+        <label asp-for="Zal_PlanyProdukcyjne" class="form-check-label">
             plany produkcyjne określające wielkość i rodzaj produkcji (w przypadku gospodarstw rolnych: plany produkcji roślinnej, plany produkcji zwierzęcej),
         </label>
     </div>
 
     <div class="form-check mb-1">
-        <input asp-for="Formularz.Zal_SkladProduktu" class="form-check-input" type="checkbox" id="Zal_SkladProduktu" />
-        <label asp-for="Formularz.Zal_SkladProduktu" class="form-check-label">
+        <input asp-for="Zal_SkladProduktu" class="form-check-input" type="checkbox" id="Zal_SkladProduktu" />
+        <label asp-for="Zal_SkladProduktu" class="form-check-label">
             skład produktu wraz z określeniem wydajności, a przypadku gospodarstw rolnych szacowną wielkość produkcji zwierzęcej.
         </label>
     </div>
@@ -344,14 +344,14 @@
     <!-- ===================== Data i miesce złożenia formularza ===================== -->
     <div class="row mt-5 pt-2 border-top">
         <div class="col-md-3">
-            <label asp-for="Formularz.DataZlozenia" class="form-label fw-bold">Data złożenia:</label>
-            <input asp-for="Formularz.DataZlozenia" type="date" class="form-control" />
-            <span asp-validation-for="Formularz.DataZlozenia" class="text-danger small"></span>
+            <label asp-for="DataZlozenia" class="form-label fw-bold">Data złożenia:</label>
+            <input asp-for="DataZlozenia" type="date" class="form-control" />
+            <span asp-validation-for="DataZlozenia" class="text-danger small"></span>
         </div>
         <div class="col-md-9">
-            <label asp-for="Formularz.MiejsceZlozenia" class="form-label fw-bold">Miejscowość:</label>
-            <input asp-for="Formularz.MiejsceZlozenia" class="form-control" placeholder="Wpisz nazwę miejscowości..." />
-            <span asp-validation-for="Formularz.MiejsceZlozenia" class="text-danger small"></span>
+            <label asp-for="MiejsceZlozenia" class="form-label fw-bold">Miejscowość:</label>
+            <input asp-for="MiejsceZlozenia" class="form-control" placeholder="Wpisz nazwę miejscowości..." />
+            <span asp-validation-for="MiejsceZlozenia" class="text-danger small"></span>
         </div>
     </div>
 
