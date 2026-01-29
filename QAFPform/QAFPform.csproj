@@ -10,8 +10,4 @@
     <PackageReference Include="FirebirdSql.EntityFrameworkCore.Firebird" Version="12.0.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Models\Formularz\" />
-  </ItemGroup>
-
 </Project>
